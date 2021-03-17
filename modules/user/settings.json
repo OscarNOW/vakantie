@@ -11,7 +11,8 @@
             "account": "account",
             "loginToken": "loginToken",
             "info": "info",
-            "displayName": "displayName"
+            "displayName": "displayName",
+            "oldPassword": "oldPassword"
         }
     },
     "letters": {

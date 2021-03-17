@@ -357,6 +357,13 @@ function parseErrorRaw(error, customText) {
 				}
 			]
 		};
+
+		let easyAccesPath = null;
+		try {
+			easyAccesPath = errorMessage.split('\n')[1].split('(')[1].split(')')[0];
+		} catch {}
+		if(easyAccesPath) obj.occurrences[0].easyAccesPath = easyAccesPath;
+
 		if (customText) obj.occurrences[0].customText = customText;
 		fs.writeFileSync(path, JSON.stringify(obj));
 		return `${fileName}`;
@@ -364,10 +371,18 @@ function parseErrorRaw(error, customText) {
 		let date = new Date().getTime();
 		let path = `${settings.generic.path.files.errors}${sameFile}`;
 		let oldObj = require(path);
+
 		let obj = {
 			time: date,
 			stack: errorMessage.split('\n')
 		};
+
+		let easyAccesPath = null;
+		try {
+			easyAccesPath = errorMessage.split('\n')[1].split('(')[1].split(')')[0];
+		} catch {}
+		if(easyAccesPath) obj.easyAccesPath = easyAccesPath;
+
 		if (customText) obj.customText = customText;
 		oldObj.occurrences.push(obj);
 		fs.writeFileSync(path, JSON.stringify(oldObj));
