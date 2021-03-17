@@ -7,7 +7,6 @@ let userdatabase = require(`../../${settings.path.files.userdatabase}`);
 
 module.exports = {
 	execute(statusCode, error, end, request, extra, params, response) {
-		return end('test');
 		try {
 			userdatabase = JSON.parse(fs.readFileSync(`${mSettings.generic.path.files.modules}user/${settings.path.files.userdatabase}`));
 		} catch (err) {
