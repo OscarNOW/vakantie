@@ -12,7 +12,8 @@
             "loginToken": "loginToken",
             "info": "info",
             "displayName": "displayName",
-            "oldPassword": "oldPassword"
+            "oldPassword": "oldPassword",
+            "newPassword": "newPassword"
         }
     },
     "letters": {

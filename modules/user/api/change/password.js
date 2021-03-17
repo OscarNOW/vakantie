@@ -28,9 +28,18 @@ module.exports = {
 		if (!isValidLoginToken) return statusCode(400, mMessages.error.notValid.replace('{argument}', settings.path.website.loginToken));
 		if (!params[settings.path.website.oldPassword]) return statusCode(400, mMessages.error.notGiven.replace('{argument}', settings.path.website.oldPassword));
 		let isCorrectPassword = sha256(params[settings.path.website.oldPassword]) == userdatabase[uin].login.cridentials.password;
-		if (!isCorrectPassword) return statusCode(400, mMessages.notValid.replace('{argument}', settings.path.website.oldPassword));
+		if (!isCorrectPassword) return statusCode(400, mMessages.error.notValid.replace('{argument}', settings.path.website.oldPassword));
 
-		debugger;
+		if(!params[settings.path.website.newPassword]) return statusCode(400, mMessages.error.notGiven.replace('{argument}', settings.path.website.newPassword));
+
+		userdatabase[uin].login.cridentials.password = sha256(params[settings.path.website.newPassword]);
+
+		//*
+		try {
+			fs.writeFileSync(`${mSettings.generic.path.files.modules}user/${settings.path.files.userdatabase}`, JSON.stringify(userdatabase));
+		} catch (err) {
+			return error(err, messages.error.databaseUpdate);
+		} //*/
 
 		end();
 	}
