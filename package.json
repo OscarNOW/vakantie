@@ -1,0 +1,15 @@
+{
+  "name": "template",
+  "version": "1.0.0",
+  "description": "Een template voor een website",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ."
+  },
+  "author": "Oscar",
+  "license": "ISC",
+  "dependencies": {
+    "js-sha256": "^0.9.0",
+    "sniffr": "^1.2.0"
+  }
+}

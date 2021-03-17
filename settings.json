@@ -1,0 +1,19 @@
+{
+    "generic": {
+        "websiteUrl": "localhost",
+        "lang": "nl",
+        "path": {
+            "files": {
+                "messages": "./messages/",
+                "api": "./api/",
+                "errors": "./errors/",
+                "files": "./files/",
+                "modules": "./modules/",
+                "moduleApi": "{modules}{name}/api/"
+            },
+            "online": {
+                "api": "/api/"
+            }
+        }
+    }
+}

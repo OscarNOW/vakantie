@@ -1,0 +1,60 @@
+{
+    "U8X8WP5RSKY": {
+        "login": {
+            "cridentials": {
+                "email": "oscarknap@ziggo.nl",
+                "password": "de6b9dbb007c8b094257d2ad95099a067d6619b57c6a20f774d91fbf538aae11"
+            },
+            "tokens": {
+                "LDYH5BSWUSR": {
+                    "ip": {
+                        "value": "::1"
+                    },
+                    "browser": {
+                        "name": "chrome",
+                        "version": [
+                            89,
+                            0,
+                            4389,
+                            82
+                        ]
+                    },
+                    "os": {
+                        "name": "windows",
+                        "version": [
+                            10,
+                            0
+                        ]
+                    },
+                    "lang": [
+                        {
+                            "name": "nl",
+                            "quality": 1,
+                            "region": "NL"
+                        },
+                        {
+                            "name": "nl",
+                            "quality": 0.9
+                        },
+                        {
+                            "name": "en",
+                            "quality": 0.8,
+                            "region": "US"
+                        },
+                        {
+                            "name": "en",
+                            "quality": 0.7
+                        },
+                        {
+                            "name": "la",
+                            "quality": 0.6
+                        }
+                    ],
+                    "cookie": "DG23N2PHWW9"
+                }
+            }
+        },
+        "publicSettings": {},
+        "displayName": "Oskkkr"
+    }
+}
