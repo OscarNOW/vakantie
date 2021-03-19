@@ -14,25 +14,25 @@ module.exports = {
 			return error(err, messages.error.databaseRead);
 		}
 
-		if (!params[settings.path.website.loginToken]) return statusCode(400, mMessages.error.notGiven.replace('{argument}', settings.path.website.loginToken));
+		if (!params[settings.path.online.loginToken]) return statusCode(400, mMessages.error.notGiven.replace('{argument}', settings.path.online.loginToken));
 
 		let isValidLoginToken = false;
 		let uin = null;
 		for (const [key, value] of Object.entries(userdatabase)) {
-			if (value.login.tokens[params[settings.path.website.loginToken]]) {
+			if (value.login.tokens[params[settings.path.online.loginToken]]) {
 				isValidLoginToken = true;
 				uin = key;
 			}
 		}
 
-		if (!isValidLoginToken) return statusCode(400, mMessages.error.notValid.replace('{argument}', settings.path.website.loginToken));
-		if (!params[settings.path.website.oldPassword]) return statusCode(400, mMessages.error.notGiven.replace('{argument}', settings.path.website.oldPassword));
-		let isCorrectPassword = sha256(params[settings.path.website.oldPassword]) == userdatabase[uin].login.cridentials.password;
-		if (!isCorrectPassword) return statusCode(400, mMessages.error.notValid.replace('{argument}', settings.path.website.oldPassword));
+		if (!isValidLoginToken) return statusCode(400, mMessages.error.notValid.replace('{argument}', settings.path.online.loginToken));
+		if (!params[settings.path.online.oldPassword]) return statusCode(400, mMessages.error.notGiven.replace('{argument}', settings.path.online.oldPassword));
+		let isCorrectPassword = sha256(params[settings.path.online.oldPassword]) == userdatabase[uin].login.cridentials.password;
+		if (!isCorrectPassword) return statusCode(400, mMessages.error.notValid.replace('{argument}', settings.path.online.oldPassword));
 
-		if(!params[settings.path.website.newPassword]) return statusCode(400, mMessages.error.notGiven.replace('{argument}', settings.path.website.newPassword));
+		if (!params[settings.path.online.newPassword]) return statusCode(400, mMessages.error.notGiven.replace('{argument}', settings.path.online.newPassword));
 
-		userdatabase[uin].login.cridentials.password = sha256(params[settings.path.website.newPassword]);
+		userdatabase[uin].login.cridentials.password = sha256(params[settings.path.online.newPassword]);
 
 		//*
 		try {

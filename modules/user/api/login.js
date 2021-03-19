@@ -17,20 +17,20 @@ module.exports = {
 			return error(err, messages.error.databaseRead);
 		}
 
-		if (!params[settings.path.website.account]) return statusCode(400, mMessages.error.notGiven.replace('{argument}', settings.path.website.account));
+		if (!params[settings.path.online.account]) return statusCode(400, mMessages.error.notGiven.replace('{argument}', settings.path.online.account));
 
-		let uin = params[settings.path.website.account];
+		let uin = params[settings.path.online.account];
 
 		if (!userdatabase[uin]) return statusCode(400, messages.error.UINNotValid);
-		if (!params[settings.path.website.password]) return statusCode(400, mMessages.error.notGiven.replace('{argument}', settings.path.website.password));
-		if (sha256(params[settings.path.website.password]) != userdatabase[uin].login.cridentials.password) return statusCode(400, messages.error.wrongPassword);
+		if (!params[settings.path.online.password]) return statusCode(400, mMessages.error.notGiven.replace('{argument}', settings.path.online.password));
+		if (sha256(params[settings.path.online.password]) != userdatabase[uin].login.cridentials.password) return statusCode(400, messages.error.wrongPassword);
 
 		if (!userdatabase[uin].login.tokens) userdatabase[uin].login.tokens = {};
 
 		let loginToken = null;
 		let level = 0;
 
-		let requestInfo = require('../../requestInfo/index.js').getRequestInfo(request, params[settings.path.website.deviceCookie]);
+		let requestInfo = require('../../requestInfo/index.js').getRequestInfo(request, params[settings.path.online.deviceCookie]);
 		for (const [key, value] of Object.entries(userdatabase[uin].login.tokens)) {
 			let ourLevel = require('../../devices/index.js').checkIfSame(requestInfo, value);
 
@@ -49,16 +49,16 @@ module.exports = {
 				return error(err, messages.error.databaseUpdate);
 			} //*/
 
-			if (!params[settings.path.website.deviceCookie] && userdatabase[uin].login.tokens[loginToken].cookie) {
-				return end(JSON.stringify({code: 200, loginToken, setDeviceCookie: userdatabase[uin].login.tokens[loginToken].cookie}));
+			if (!params[settings.path.online.deviceCookie] && userdatabase[uin].login.tokens[loginToken].cookie) {
+				return end(JSON.stringify({ code: 200, loginToken, setDeviceCookie: userdatabase[uin].login.tokens[loginToken].cookie }));
 			}
 
-			return end(JSON.stringify({code: 200, loginToken}));
+			return end(JSON.stringify({ code: 200, loginToken }));
 		} else {
 			//Maak nieuwe loginToken
 			let newDeviceCookie = null;
-			if (params[settings.path.website.deviceCookie]) newDeviceCookie = params[settings.path.website.deviceCookie];
-			if (!params[settings.path.website.deviceCookie]) newDeviceCookie = settings.letters.deviceCookie + require('../../random/index.js').random(10, require('../../random/index.js').chars.nonConfusingNumsAndLetters);
+			if (params[settings.path.online.deviceCookie]) newDeviceCookie = params[settings.path.online.deviceCookie];
+			if (!params[settings.path.online.deviceCookie]) newDeviceCookie = settings.letters.deviceCookie + require('../../random/index.js').random(10, require('../../random/index.js').chars.nonConfusingNumsAndLetters);
 			let newToken = settings.letters.loginToken + require('../../random/index.js').random(10, require('../../random/index.js').chars.nonConfusingNumsAndLetters);
 
 			userdatabase[uin].login.tokens[newToken] = requestInfo;
@@ -71,11 +71,11 @@ module.exports = {
 				return error(err, messages.error.databaseUpdate);
 			} //*/
 
-			if (!params[settings.path.website.deviceCookie]) {
-				return end(JSON.stringify({code: 200, loginToken: newToken, setDeviceCookie: newDeviceCookie}));
+			if (!params[settings.path.online.deviceCookie]) {
+				return end(JSON.stringify({ code: 200, loginToken: newToken, setDeviceCookie: newDeviceCookie }));
 			}
 
-			return end(JSON.stringify({code: 200, loginToken: newToken}));
+			return end(JSON.stringify({ code: 200, loginToken: newToken }));
 		}
 	}
 };

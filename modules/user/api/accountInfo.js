@@ -15,17 +15,17 @@ module.exports = {
 
 		let publicUserObject = {};
 
-		if (params[settings.path.website.loginToken]) {
+		if (params[settings.path.online.loginToken]) {
 			let hasValidLoginToken = false;
 			let uin = null;
 
 			for (const [key, value] of Object.entries(userdatabase)) {
-				if (value.login.tokens[params[settings.path.website.loginToken]]) {
+				if (value.login.tokens[params[settings.path.online.loginToken]]) {
 					hasValidLoginToken = true;
 					uin = key;
 				}
 			}
-			if (!hasValidLoginToken) return statusCode(401, mMessages.error.notValid.replace('{argument}', settings.path.website.loginToken));
+			if (!hasValidLoginToken) return statusCode(401, mMessages.error.notValid.replace('{argument}', settings.path.online.loginToken));
 
 			for (const [key, value] of Object.entries(settings.defaultAccountPublicSettings)) {
 				if (value.editable || value.default == true) {
@@ -34,9 +34,9 @@ module.exports = {
 				}
 			}
 		} else {
-			if (!params[settings.path.website.account]) return statusCode(400, mMessages.error.notGiven.replace('{argument}', settings.path.website.account));
-			let uin = params[settings.path.website.account];
-			if (!userdatabase[uin]) return statusCode(400, mMessages.error.notValid.replace('{argument}', settings.path.website.account));
+			if (!params[settings.path.online.account]) return statusCode(400, mMessages.error.notGiven.replace('{argument}', settings.path.online.account));
+			let uin = params[settings.path.online.account];
+			if (!userdatabase[uin]) return statusCode(400, mMessages.error.notValid.replace('{argument}', settings.path.online.account));
 
 			for (const [key, value] of Object.entries(settings.defaultAccountPublicSettings)) {
 				let isPublic = false;

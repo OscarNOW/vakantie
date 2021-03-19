@@ -172,7 +172,7 @@ http.createServer(async function (request, response) {
 				if (!path.endsWith('/')) path = `${path}/`;
 				path = `${path}index.html`;
 			}
-			path = `./files${path}`;
+			path = `${settings.generic.path.files.files}${path}`;
 
 			if (!fs.existsSync(path)) {
 				let newPath = `/${orgPath.split('/').splice(2).join('/')}`;
@@ -180,7 +180,7 @@ http.createServer(async function (request, response) {
 					if (!newPath.endsWith('/')) newPath = `${newPath}/`;
 					newPath = `${path}index.html`;
 				}
-				newPath = `./files${newPath}`;
+				newPath = `${settings.generic.path.files.files}${newPath}`;
 				if (fs.existsSync(newPath)) path = newPath;
 			}
 			//#endregion
@@ -238,7 +238,7 @@ function errorCode(response, code, extra) {
 	let errorMessage = messages.httpStatusCodes[(code + '').split('')[0] * 100];
 	if (errorMessage) if (errorMessage[code]) text += errorMessage[code];
 
-	let path = './files/error/index.html';
+	let path = settings.generic.path.files.errorFile.replace('{file}', settings.generic.path.files.files);
 
 	fs.readFile(path, async function (err, data) {
 		if (err) throw err;

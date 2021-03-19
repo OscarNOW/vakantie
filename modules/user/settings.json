@@ -4,7 +4,7 @@
             "userdatabase": "./files/userdatabase.json",
             "messages": "./messages/"
         },
-        "website": {
+        "online": {
             "email": "email",
             "password": "password",
             "deviceCookie": "deviceCookie",

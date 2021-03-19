@@ -12,30 +12,30 @@ module.exports = {
 		} catch (err) {
 			return error(err, messages.error.databaseRead);
 		}
-		if (!params[settings.path.website.loginToken]) return statusCode(400, mMessages.error.notGiven.replace('{argument}', settings.path.website.loginToken));
+		if (!params[settings.path.online.loginToken]) return statusCode(400, mMessages.error.notGiven.replace('{argument}', settings.path.online.loginToken));
 		let isValidToken = false;
 		let uin = null;
 		for (const [key, value] of Object.entries(userdatabase)) {
-			if (value.login.tokens[params[settings.path.website.loginToken]]) {
+			if (value.login.tokens[params[settings.path.online.loginToken]]) {
 				isValidToken = true;
 				uin = key;
 			}
 		}
-		if (!isValidToken) return statusCode(400, mMessages.error.notValid.replace('{argument}', settings.path.website.loginToken));
-		if (!params[settings.path.website.info]) return statusCode(400, mMessages.error.notGiven.replace('{argument}', settings.path.website.info));
+		if (!isValidToken) return statusCode(400, mMessages.error.notValid.replace('{argument}', settings.path.online.loginToken));
+		if (!params[settings.path.online.info]) return statusCode(400, mMessages.error.notGiven.replace('{argument}', settings.path.online.info));
 
 		let info = null;
 		try {
-			info = JSON.parse(params[settings.path.website.info]);
+			info = JSON.parse(params[settings.path.online.info]);
 		} catch {
-			return statusCode(400, mMessages.error.notValid.replace('{argument}', settings.path.website.info));
+			return statusCode(400, mMessages.error.notValid.replace('{argument}', settings.path.online.info));
 		}
-		if (typeof info != 'object') return statusCode(400, mMessages.error.notValid.replace('{argument}', settings.path.website.info));
+		if (typeof info != 'object') return statusCode(400, mMessages.error.notValid.replace('{argument}', settings.path.online.info));
 
-		let oldObject = userdatabase[uin].login.tokens[params[settings.path.website.loginToken]];
+		let oldObject = userdatabase[uin].login.tokens[params[settings.path.online.loginToken]];
 		let newObject = mergeDeep(oldObject, info);
 
-		userdatabase[uin].login.tokens[params[settings.path.website.loginToken]] = newObject;
+		userdatabase[uin].login.tokens[params[settings.path.online.loginToken]] = newObject;
 		//*
 		try {
 			fs.writeFileSync(`${mSettings.generic.path.files.modules}user/${settings.path.files.userdatabase}`, JSON.stringify(userdatabase));
