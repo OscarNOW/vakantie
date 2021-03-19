@@ -116,7 +116,7 @@ http.createServer(async function (request, response) {
 							params = cont;
 							ex.execute(
 								(code, text) => {
-									errorCode(response, code, {text: text});
+									errorCode(response, code, { text: text });
 								},
 								parseError,
 								(data) => {
@@ -131,7 +131,7 @@ http.createServer(async function (request, response) {
 					} else {
 						ex.execute(
 							(code, text) => {
-								errorCode(response, code, {text: text});
+								errorCode(response, code, { text: text });
 							},
 							parseError,
 							(data) => {
@@ -152,7 +152,7 @@ http.createServer(async function (request, response) {
 					}
 				}
 			} else {
-				return errorCode(response, 404, {text: messages.error.apiCallNotFound});
+				return errorCode(response, 404, { text: messages.error.apiCallNotFound });
 			}
 
 			return;
@@ -206,7 +206,7 @@ http.createServer(async function (request, response) {
 					if (err) throw err;
 					let newData = data;
 
-					response.writeHead(200, {'Content-Type': mime.lookup(path)});
+					response.writeHead(200, { 'Content-Type': mime.lookup(path) });
 					return response.end(newData);
 				});
 			} else {
@@ -229,7 +229,7 @@ function remove(string, remove) {
 //#endregion
 //#region errorCode(response, code)
 function errorCode(response, code, extra) {
-	response.writeHead(code, {'Content-Type': 'text/plain'});
+	response.writeHead(code, { 'Content-Type': 'text/plain' });
 	if (!extra) extra = {};
 	let errorFile = extra.errorFile;
 	let customText = extra.text;
@@ -257,7 +257,7 @@ function errorCode(response, code, extra) {
 			newData = Buffer.from(newText, 'utf-8');
 		}
 
-		response.writeHead(code, {'Content-Type': mime.lookup(path)});
+		response.writeHead(code, { 'Content-Type': mime.lookup(path) });
 		return response.end(newData);
 	});
 }
@@ -312,7 +312,7 @@ function parseErrorOnline(error, response, customText) {
 
 		evalErrors(`${file}`);
 		file = file.split('.txt')[0];
-		return errorCode(response, 500, {errorFile: file, text: customText});
+		return errorCode(response, 500, { errorFile: file, text: customText });
 	} catch (err) {
 		throw err;
 	}
@@ -361,8 +361,8 @@ function parseErrorRaw(error, customText) {
 		let easyAccesPath = null;
 		try {
 			easyAccesPath = errorMessage.split('\n')[1].split('(')[1].split(')')[0];
-		} catch {}
-		if(easyAccesPath) obj.occurrences[0].easyAccesPath = easyAccesPath;
+		} catch { }
+		if (easyAccesPath) obj.occurrences[0].easyAccesPath = easyAccesPath;
 
 		if (customText) obj.occurrences[0].customText = customText;
 		fs.writeFileSync(path, JSON.stringify(obj));
@@ -380,8 +380,8 @@ function parseErrorRaw(error, customText) {
 		let easyAccesPath = null;
 		try {
 			easyAccesPath = errorMessage.split('\n')[1].split('(')[1].split(')')[0];
-		} catch {}
-		if(easyAccesPath) obj.easyAccesPath = easyAccesPath;
+		} catch { }
+		if (easyAccesPath) obj.easyAccesPath = easyAccesPath;
 
 		if (customText) obj.customText = customText;
 		oldObj.occurrences.push(obj);
