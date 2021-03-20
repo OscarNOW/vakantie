@@ -23,7 +23,7 @@ module.exports = {
 
 		let uin = params[settings.path.online.account];
 
-		if (!userdatabase[uin]) return statusCode(400, messages.error.UINNotValid);
+		if (!userdatabase[uin]) return statusCode(400, mMessages.error.notValid.replace('{argument}', settings.path.online.account));
 		if (!params[settings.path.online.password]) return statusCode(400, mMessages.error.notGiven.replace('{argument}', settings.path.online.password));
 		if (sha256(params[settings.path.online.password]) != userdatabase[uin].login.cridentials.password) return statusCode(400, messages.error.wrongPassword);
 
@@ -51,20 +51,13 @@ module.exports = {
 				return error(err, messages.error.databaseUpdate);
 			} //*/
 
-			if (!params[settings.path.online.deviceCookie] && userdatabase[uin].login.tokens[loginToken].cookie) {
-				return end(JSON.stringify({ code: 200, loginToken, setDeviceCookie: userdatabase[uin].login.tokens[loginToken].cookie }));
-			}
-
 			return end(JSON.stringify({ code: 200, loginToken }));
 		} else {
 			//Maak nieuwe loginToken
-			let newDeviceCookie = null;
-			if (params[settings.path.online.deviceCookie]) newDeviceCookie = params[settings.path.online.deviceCookie];
 			if (!params[settings.path.online.deviceCookie]) newDeviceCookie = settings.letters.deviceCookie + require('../../random/index.js').random(10, require('../../random/index.js').chars.nonConfusingNumsAndLetters);
 			let newToken = settings.letters.loginToken + require('../../random/index.js').random(10, require('../../random/index.js').chars.nonConfusingNumsAndLetters);
 
 			userdatabase[uin].login.tokens[newToken] = requestInfo;
-			userdatabase[uin].login.tokens[newToken].cookie = newDeviceCookie;
 
 			//*
 			try {
@@ -72,10 +65,6 @@ module.exports = {
 			} catch (err) {
 				return error(err, messages.error.databaseUpdate);
 			} //*/
-
-			if (!params[settings.path.online.deviceCookie]) {
-				return end(JSON.stringify({ code: 200, loginToken: newToken, setDeviceCookie: newDeviceCookie }));
-			}
 
 			return end(JSON.stringify({ code: 200, loginToken: newToken }));
 		}
