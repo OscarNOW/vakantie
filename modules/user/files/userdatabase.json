@@ -2,57 +2,10 @@
     "UXDEYP2BHS7": {
         "login": {
             "cridentials": {
-                "email": "boem312ismijnign@gmail.com",
-                "password": "de6b9dbb007c8b094257d2ad95099a067d6619b57c6a20f774d91fbf538aae11"
+                "email": "oscarknap@ziggo.nl",
+                "password": "4df3c3f68fcc83b27e9d42c90431a72499f17875c81a599b566c9889b9696703"
             },
-            "tokens": {
-                "L9VFTZ66VBT": {
-                    "ip": {
-                        "value": "::1"
-                    },
-                    "browser": {
-                        "name": "chrome",
-                        "version": [
-                            89,
-                            0,
-                            4389,
-                            82
-                        ]
-                    },
-                    "os": {
-                        "name": "windows",
-                        "version": [
-                            10,
-                            0
-                        ]
-                    },
-                    "lang": [
-                        {
-                            "name": "nl",
-                            "quality": 1,
-                            "region": "NL"
-                        },
-                        {
-                            "name": "nl",
-                            "quality": 0.9
-                        },
-                        {
-                            "name": "en",
-                            "quality": 0.8,
-                            "region": "US"
-                        },
-                        {
-                            "name": "en",
-                            "quality": 0.7
-                        },
-                        {
-                            "name": "la",
-                            "quality": 0.6
-                        }
-                    ],
-                    "cookie": "DA7DKK3BUVB"
-                }
-            }
+            "tokens": {}
         },
         "publicSettings": {}
     }
