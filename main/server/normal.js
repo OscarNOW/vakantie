@@ -1,6 +1,7 @@
 const fs = require('fs');
 const mime = require('mime-types');
 const errorCode = require('../functions/error/errorCode.js').execute;
+const settings = require('../../settings.json');
 
 module.exports = {
     execute(request, response) {

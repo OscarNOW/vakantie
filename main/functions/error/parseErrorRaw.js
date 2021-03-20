@@ -1,6 +1,7 @@
 const fs = require('fs');
 const readdirSync = fs.readdirSync;
 const writeFileSync = fs.writeFileSync;
+const settings = require('../../../settings.json');
 
 module.exports = {
     execute(error, customText) {
