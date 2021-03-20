@@ -5,20 +5,8 @@ const settings = require('../../settings.json');
 
 module.exports = {
     execute(request, response) {
-        let path = request.url.toLowerCase();
-        if (path.includes('?')) path = path.split('?')[0];
 
-        let orgPath = path;
-        if (path.split('/')[1] && path.split('/')[2]) {
-            if (path.split('/')[1] == path.split('/')[2]) {
-                path = `/${path.split('/').splice(2).join('/')}`;
-            }
-        }
-        if (!path.split('/')[path.split('/').length - 1].includes('.')) {
-            if (!path.endsWith('/')) path = `${path}/`;
-            path = `${path}index.html`;
-        }
-        path = `${settings.generic.path.files.files}${path}`;
+        let { path, orgPath } = require('../functions/parse/normal').execute(request.url.toLowerCase());
 
         if (!fs.existsSync(path)) {
             let newPath = `/${orgPath.split('/').splice(2).join('/')}`;
