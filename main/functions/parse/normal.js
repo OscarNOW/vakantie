@@ -1,3 +1,6 @@
+const fs = require('fs');
+const settings = require('../../../settings.json');
+
 module.exports = {
     execute(p) {
         let path = p;
@@ -42,6 +45,30 @@ module.exports = {
 
         path = `${settings.generic.path.files}${path}`;
 
-        return { path, orgPath };
+        if (!fs.existsSync(path)) {
+            let newPath =
+                '/' +
+                orgPath
+                    .split('/')
+                    .splice(2)
+                    .join('/');
+
+            if (!newPath
+                .split('/')
+            [
+                newPath
+                    .split('/')
+                    .length - 1
+            ]
+                .includes('.')
+            ) {
+                if (!newPath.endsWith('/')) newPath = `${newPath}/`;
+                newPath = `${path}index.html`;
+            }
+            newPath = `${settings.generic.path.files.files}${newPath}`;
+            if (fs.existsSync(newPath)) path = newPath;
+        }
+
+        return path;
     }
 }
