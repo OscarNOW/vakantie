@@ -1,6 +1,6 @@
 const fs = require('fs');
 const mime = require('mime-types');
-const errorCode = require('../functions/error/errorCode.js').execute;
+const statusCode = require('../functions/error/statusCode.js').execute;
 
 module.exports = {
     execute(request, response) {
@@ -16,7 +16,7 @@ module.exports = {
             });
         } else {
             if (path.includes('.html')) {
-                errorCode(response, 404);
+                statusCode(response, 404);
             } else {
                 response.writeHead(400)
                 return response.end();

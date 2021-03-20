@@ -1,6 +1,6 @@
 const parseErrorRaw = require('./parseErrorRaw').execute;
 const evalErrors = require('./evalErrors').execute;
-const errorCode = require('./errorCode').execute;
+const statusCode = require('./statusCode').execute;
 
 module.exports = {
     execute(error, response, customText) {
@@ -19,7 +19,7 @@ module.exports = {
 
             evalErrors(`${file}`);
             file = file.split('.txt')[0];
-            return errorCode(response, 500, { errorFile: file, text: customText });
+            return statusCode(response, 500, { errorFile: file, text: customText });
         } catch (err) {
             throw err;
         }

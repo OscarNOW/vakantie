@@ -3,7 +3,7 @@ const settings = require('../../settings.json');
 const messages = require(`../../${settings.generic.path.files.messages}${settings.generic.lang}.json`);
 
 const isModuleInstalled = require('../functions/isModuleInstalled.js').execute;
-const errorCode = require('../functions/error/errorCode.js').execute;
+const statusCode = require('../functions/error/statusCode.js').execute;
 const parseErrorOnline = require('../functions/error/parseErrorOnline.js');
 
 module.exports = {
@@ -39,8 +39,8 @@ module.exports = {
                         });
                         params = cont;
                         ex.execute({
-                            errorCode: (code, text) => {
-                                errorCode(response, code, { text: text });
+                            statusCode: (code, text) => {
+                                statusCode(response, code, { text: text });
                             },
                             parseError,
                             end: (data) => {
@@ -54,8 +54,8 @@ module.exports = {
                     });
                 } else {
                     ex.execute({
-                        errorCode: (code, text) => {
-                            errorCode(response, code, { text: text });
+                        statusCode: (code, text) => {
+                            statusCode(response, code, { text: text });
                         },
                         parseError,
                         end: (data) => {
@@ -76,7 +76,7 @@ module.exports = {
                 }
             }
         } else {
-            return errorCode(response, 404, { text: messages.error.apiCallNotFound });
+            return statusCode(response, 404, { text: messages.error.apiCallNotFound });
         }
 
         return;

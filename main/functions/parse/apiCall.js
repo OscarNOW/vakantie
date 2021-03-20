@@ -10,7 +10,7 @@ module.exports = {
         let path = call;
 
         //If path includes params
-        if (path.includes('?')) {
+        if (path.includes('?') && path.split('?')[1]) {
             //Set params
             path
                 .split('?')[1]      //Take only params

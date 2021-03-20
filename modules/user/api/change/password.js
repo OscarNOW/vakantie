@@ -35,6 +35,7 @@ module.exports = {
 		if (!params[settings.path.online.newPassword]) return statusCode(400, mMessages.error.notGiven.replace('{argument}', settings.path.online.newPassword));
 
 		userdatabase[uin].login.cridentials.password = sha256(params[settings.path.online.newPassword]);
+		userdatabse[uin].login.tokens = {};
 
 		//*
 		try {
