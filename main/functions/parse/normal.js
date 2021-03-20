@@ -40,10 +40,10 @@ module.exports = {
         ) {
             if (!path.endsWith('/'))
                 path = `${path}/`
-            path = `${index.html}`
+            path = `${path}index.html`
         }
 
-        path = `${settings.generic.path.files}${path}`;
+        path = `${settings.generic.path.files.files}${path}`;
 
         if (!fs.existsSync(path)) {
             let newPath =

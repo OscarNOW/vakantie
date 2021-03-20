@@ -1,6 +1,7 @@
 const fs = require('fs');
 const settings = require('../../../settings.json');
 const messages = require(`../../.${settings.generic.path.files.messages}${settings.generic.lang}.json`);
+const mime = require('mime-types');
 
 module.exports = {
     execute(response, code, extra) {
@@ -13,7 +14,7 @@ module.exports = {
         let errorMessage = messages.httpStatusCodes[(code + '').split('')[0] * 100];
         if (errorMessage) if (errorMessage[code]) text += errorMessage[code];
 
-        let path = settings.generic.path.files.errorFile.replace('{file}', settings.generic.path.files.files);
+        let path = settings.generic.path.files.errorFile.replace('{files}', settings.generic.path.files.files);
 
         fs.readFile(path, async function (err, data) {
             if (err) throw err;
