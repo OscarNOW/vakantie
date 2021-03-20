@@ -7,10 +7,10 @@ const errorCode = require('../functions/error/errorCode.js').execute;
 const parseErrorOnline = require('../functions/error/parseErrorOnline.js');
 
 module.exports = {
-    execute(request, response, parseError) {
+    execute(request, response) {
         let parseError = (error, customText) => parseErrorOnline(error, response, customText);
 
-        let path = require('../functions/parse/apiCall.js').execute(request.url);
+        let { path, params } = require('../functions/parse/apiCall.js').execute(request.url);
 
         if (api[path]) {
             if (api[path].enabled.dependencies.installed) {

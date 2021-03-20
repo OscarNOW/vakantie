@@ -7,7 +7,7 @@ module.exports = {
 
         try {
             if (request.url.toLowerCase().startsWith(settings.generic.path.online.api)) {
-                return require('../server/api.js').execute(request, response, parseError);
+                return require('../server/api.js').execute(request, response);
             } else {
                 return require('./normal.js').execute(request, response);
             }

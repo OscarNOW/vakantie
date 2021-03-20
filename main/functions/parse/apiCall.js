@@ -32,6 +32,6 @@ module.exports = {
 
         path = `/${path}` //Add "/" to start of path
 
-        return path;
+        return { path, params }
     }
 }

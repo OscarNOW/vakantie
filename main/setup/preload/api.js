@@ -21,7 +21,7 @@ function addApiCalls(websitePath, path) {
             if (lstatSync(`${path}${apiName}/`).isDirectory()) {
                 addApiCalls(`${websitePath}${apiName}/`, `${path}${apiName}/`);
             } else {
-                let req = require(`${path}${apiName}`);
+                let req = require(`../../../${path}${apiName}`);
                 apiName = apiName.split('.js')[0];
                 let dependenciesInstalled = true;
                 let dependenciesNotInstalled = [];
@@ -34,7 +34,7 @@ function addApiCalls(websitePath, path) {
                     });
                 }
                 api[`${websitePath}${apiName}`] = {
-                    file: require(`${path}${apiName}`),
+                    file: require(`../../../${path}${apiName}`),
                     enabled: {
                         dependencies: {
                             installed: dependenciesInstalled,
