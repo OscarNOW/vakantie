@@ -9,18 +9,8 @@ const parseErrorOnline = require('../functions/error/parseErrorOnline.js');
 export function execute(request, response, parseError) {
     let parseError = (error, customText) => parseErrorOnline(error, response, customText);
 
-    let call = request.url.split(settings.generic.path.online.api).join('');
-    let params = {};
-    let path = call;
-    if (path.includes('?')) {
-        path.split('?')[1]
-            .split('&')
-            .forEach((val) => {
-                params[val.split('=')[0]] = decodeURIComponent(val.split('=')[1].replace(/\+/g, ' '));
-            });
-        path = path.split('?')[0];
-    }
-    path = `/${path}`;
+    let path = require('../functions/parse/apiCall.js').execute(request.url);
+
     if (api[path]) {
         if (api[path].enabled.dependencies.installed) {
             let ex = api[path].file;

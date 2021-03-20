@@ -1,10 +1,18 @@
-import { readdir } from 'fs';
+const readdir = require('fs').readdir
+const settings = require('../../../settings.json');
 
 export function execute() {
     console.clear();
     try {
-        readdir(settings.generic.path.files.errors, (err, files) => {
+        readdir(settings.generic.path.files.errors, (err, fi) => {
             if (err) throw err;
+
+            let files = [];
+            fi.forEach(val => {
+                if (val == settings.generic.path.files.noError) return;
+                files.push(val);
+            })
+
             if (files[0]) {
                 let message = messages.error.thereAreErrors.replace('{amount}', files.length);
                 if (files.length == 1) message = messages.error.thereIsError.replace('{amount}', files.length);

@@ -1,5 +1,9 @@
-import { readdirSync, existsSync, lstatSync } from 'fs';
-import { generic } from '../../../settings.json';
+const fs = require('fs');
+const readdirSync = fs.readdirSync;
+const existsSync = fs.existsSync;
+const lstatSync = fs.lstatSync;
+
+const generic = require('../../../settings.json').generic;
 let api = {};
 
 //Load website api

@@ -1,4 +1,6 @@
-import { readdirSync, writeFileSync } from 'fs';
+const fs = require('fs');
+const readdirSync = fs.readdirSync;
+const writeFileSync = fs.writeFileSync;
 
 export function execute(error, customText) {
     let errorMessage = error.stack;

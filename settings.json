@@ -1,6 +1,7 @@
 {
     "generic": {
         "websiteUrl": "localhost",
+        "port": "80",
         "lang": "nl",
         "path": {
             "files": {
@@ -10,7 +11,8 @@
                 "files": "./files",
                 "errorFile": "{files}/error/index.html",
                 "modules": "./modules/",
-                "moduleApi": "{modules}{name}/api/"
+                "moduleApi": "{modules}{name}/api/",
+                "noError": ".noError"
             },
             "online": {
                 "api": "/api/"
