@@ -6,7 +6,9 @@ const mMessages = require(`../../../../${mSettings.generic.path.files.messages}$
 let userdatabase = require(`../../${settings.path.files.userdatabase}`);
 
 module.exports = {
-	execute(statusCode, error, end, request, extra, params, response) {
+	execute(argument) {
+		const { statusCode, error, end, params } = argument;
+
 		try {
 			userdatabase = JSON.parse(fs.readFileSync(`${mSettings.generic.path.files.modules}user/${settings.path.files.userdatabase}`));
 		} catch (err) {

@@ -7,7 +7,9 @@ let userdatabase = require(`../../${settings.path.files.userdatabase}`);
 const sha256 = require('js-sha256').sha256;
 
 module.exports = {
-	execute(statusCode, error, end, request, extra, params, response) {
+	execute(argument) {
+		const { statusCode, error, end, params } = argument;
+
 		try {
 			userdatabase = JSON.parse(fs.readFileSync(`${mSettings.generic.path.files.modules}user/${settings.path.files.userdatabase}`));
 		} catch (err) {

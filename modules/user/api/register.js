@@ -10,7 +10,9 @@ module.exports = {
 	dependencies: {
 		modules: ['random']
 	},
-	execute(statusCode, error, end, request, extra, params, response) {
+	execute(argument) {
+		const { statusCode, error, end, params } = argument;
+
 		try {
 			userdatabase = JSON.parse(fs.readFileSync(`${mSettings.generic.path.files.modules}user/${settings.path.files.userdatabase}`));
 		} catch (err) {

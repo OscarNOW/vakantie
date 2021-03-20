@@ -25,10 +25,6 @@ module.exports = {
                 //if (!exists) errorCode(response, 500, { text: messages.error.executeFunctionNotFound })
                 if (!exists) return parseError(new Error(messages.error.executeFunctionNotFoundWithFile.replace('{file}', path)), messages.error.executeFunctionNotFound);
 
-                let extra = {
-                    isModuleInstalled
-                };
-
                 if (request.method == 'POST') {
                     let body = '';
                     request.on('data', function (data) {
@@ -42,34 +38,34 @@ module.exports = {
                             cont[key] = decodeURIComponent(value);
                         });
                         params = cont;
-                        ex.execute(
-                            (code, text) => {
+                        ex.execute({
+                            errorCode: (code, text) => {
                                 errorCode(response, code, { text: text });
                             },
                             parseError,
-                            (data) => {
+                            end: (data) => {
                                 response.end(data);
                             },
                             request,
-                            extra,
+                            isModuleInstalled,
                             params,
                             response
-                        );
+                        });
                     });
                 } else {
-                    ex.execute(
-                        (code, text) => {
+                    ex.execute({
+                        errorCode: (code, text) => {
                             errorCode(response, code, { text: text });
                         },
                         parseError,
-                        (data) => {
+                        end: (data) => {
                             response.end(data);
                         },
                         request,
-                        extra,
+                        isModuleInstalled,
                         params,
                         response
-                    );
+                    });
                 }
             } else {
                 if (isModuleInstalled('text')) {

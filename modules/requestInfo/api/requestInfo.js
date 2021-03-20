@@ -1,5 +1,7 @@
 module.exports = {
-	execute(statusCode, error, end, request, extra, params, response) {
+	execute(argument) {
+		const { end, request } = argument;
+
 		end(JSON.stringify(require('../index.js').getRequestInfo(request)));
 	}
 };
