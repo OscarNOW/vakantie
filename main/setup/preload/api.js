@@ -56,6 +56,8 @@ function addApiCalls(websitePath, path) {
     }
 }
 
-export function execute() {
-    return api;
+module.exports = {
+    execute() {
+        return api;
+    }
 }
