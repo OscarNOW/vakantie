@@ -10,8 +10,10 @@ module.exports = {
 
 		let object = {};
 
-		if (ip) object.ip = {};
-		if (ip) object.ip.value = ip;
+		if (ip)
+			object.ip = {
+				value: ip
+			};
 		if (cookie) object.cookie = cookie;
 
 		let browser = {

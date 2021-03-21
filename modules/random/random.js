@@ -1,5 +1,5 @@
 module.exports = {
-	random(length, characters) {
+	execute(length, characters) {
 		let chars = characters.split('');
 		let output = '';
 		for (let ii = 0; ii < length; ii++) {

@@ -44,7 +44,20 @@ module.exports = {
 
 		if (params[settings.path.online.displayName]) userObject.displayName = params[settings.path.online.displayName];
 
-		let uin = settings.letters.userAccount + require('../../random/index.js').random(10, require('../../random/index.js').chars.nonConfusingNumsAndLetters);
+		let uin =
+			settings.letters.userAccount
+			+
+			require('../../random/random.js').execute(
+				10,
+				require('../../random/getChars.js').execute(
+					{
+						letters: true,
+						confusingLetters: false,
+						numbers: true,
+						confusingNumbers: false
+					}
+				)
+			);
 
 		userdatabase[uin] = userObject;
 		//*

@@ -1,7 +1,5 @@
-const sniffr = require('sniffr');
-
 module.exports = {
-	checkIfSame(object1, object2) {
+	execute(object1, object2) {
 		let level = 0;
 
 		if (object1.ip && object2.ip) {

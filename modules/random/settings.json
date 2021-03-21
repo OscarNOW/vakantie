@@ -1,0 +1,8 @@
+{
+    "chars": {
+        "letters": "ABCDEFGHJKMNPRSTUVWXYZ",
+        "confusingLetters": "ILOQ",
+        "numbers": "23456789",
+        "confusingNumbers": "01"
+    }
+}
