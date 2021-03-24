@@ -21,7 +21,8 @@ module.exports = {
             file = file.split('.txt')[0];
             return statusCode(response, 500, { errorFile: file, text: customText });
         } catch (err) {
-            throw err;
+            statusCode(response, 500)
+            require('../../../index').lastFallback(err);
         }
     }
 }

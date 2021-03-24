@@ -17,7 +17,9 @@ module.exports = {
             amountError = 1;
         }
 
-        fs.writeFileSync(`${settings.generic.path.files.errors}RAW1-${amountError}-${Math.floor(Math.random() * 1000)}.txt`, `${err}`);
+        let data = `${err}\n\n\nStack:\n${new Error(`${err}`).stack.split('\n').splice(1).join('\n')}`
+
+        fs.writeFileSync(`${settings.generic.path.files.errors}RAW1-${amountError}-${Math.floor(Math.random() * 1000)}.txt`, data);
 
         if (amountError > 5) retry = false;
         console.clear();
@@ -56,4 +58,5 @@ async function countDown(start, wait, callback) {
         ii--;
         await asyncTimeout(wait);
     }
+    callback(0);
 }

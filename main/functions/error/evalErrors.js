@@ -4,8 +4,9 @@ const settings = require('../../../settings.json');
 module.exports = {
     execute() {
         console.clear();
-        try {
-            readdir(settings.generic.path.files.errors, (err, fi) => {
+        //try {
+        readdir(settings.generic.path.files.errors, (err, fi) => {
+            try {
                 if (err) throw err;
 
                 let files = [];
@@ -42,9 +43,13 @@ module.exports = {
                     console.log();
                     console.warn(message);
                 }
-            });
-        } catch (err) {
-            console.warn(err);
-        }
+            } catch (err) {
+                require('../../../index').lastFallback(err);
+            }
+        });
+        //} catch (err) {
+        //    debugger;
+        //    console.warn(err);
+        //}
     }
 }
