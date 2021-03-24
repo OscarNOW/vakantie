@@ -9,7 +9,8 @@
                 "api": "./api/",
                 "errors": "./errors/",
                 "files": "./files",
-                "errorFile": "{files}/error/index.html",
+                "errorFile": "{files}/error/general/index.html",
+                "reloadingFile": "{files}/error/reloading/index.html",
                 "modules": "./modules/",
                 "moduleApi": "{modules}{name}/api/",
                 "noError": ".noError"

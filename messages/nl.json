@@ -10,7 +10,9 @@
         "notGiven": "Geen {argument} opgegeven",
         "Unknown error in": "Niet bekende error in {place}",
         "thereAreErrors": "Er zijn {amount} errors!",
-        "thereIsError": "Er is {amount} error!"
+        "thereIsError": "Er is {amount} error!",
+        "reload": "herladen",
+        "clientServerReload": "Wachten op server"
     },
     "httpStatusCodes": {
         "400": {

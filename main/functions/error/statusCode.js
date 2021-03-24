@@ -20,7 +20,7 @@ module.exports = {
             if (err) throw err;
             let newData = data;
 
-            let newText = newData.toString('utf-8').replace('|errorCode|', code).replace('|errorCodeMessage|', text);
+            let newText = newData.toString('utf-8').replace('|errorCode|', code).replace('|errorCodeMessage|', text).replace('|reloadText|', messages.error.reload);
             newData = Buffer.from(newText, 'utf-8');
 
             if (errorFile) {

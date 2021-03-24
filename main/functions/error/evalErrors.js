@@ -1,5 +1,8 @@
 const readdir = require('fs').readdir
 const settings = require('../../../settings.json');
+const messages = require(`../../.${settings.generic.path.files.messages}${settings.generic.lang}.json`);
+const isModuleInstalled = require('../isModuleInstalled').execute;
+
 let cConsole = console;
 if (require('../../functions/isModuleInstalled').execute('console')) {
     cConsole = {
@@ -52,7 +55,7 @@ module.exports = {
                     cConsole.warn(message);
                 }
             } catch (err) {
-                require('../../../index').lastFallback(err);
+                require('./lastFallback').execute(err);
             }
         });
         //} catch (err) {

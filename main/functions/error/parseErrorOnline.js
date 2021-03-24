@@ -22,7 +22,7 @@ module.exports = {
             return statusCode(response, 500, { errorFile: file, text: customText });
         } catch (err) {
             statusCode(response, 500)
-            require('../../../index').lastFallback(err);
+            require('./lastFallback').execute(err);
         }
     }
 }

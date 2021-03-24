@@ -24,7 +24,7 @@ module.exports = {
             files.forEach(file => {
                 if (file == settings.generic.path.files.noError) return;
 
-                let data = require(`${settings.generic.path.files.errors}${file}`);
+                let data = require(`../../.${settings.generic.path.files.errors}${file}`);
 
                 if (data.errorMessage.split(': ')[1] == errorMessage.split('\n')[0].split(': ')[1]) {
                     fileIsSpecial = false;
@@ -77,7 +77,7 @@ module.exports = {
                 return sameFile;
             }
         } catch (err) {
-            require('../../../index').lastFallback(err);
+            require('./lastFallback').execute(err)
         }
     }
 }
