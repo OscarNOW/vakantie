@@ -1,7 +1,10 @@
 const readdir = require('fs').readdir
 const settings = require('../../../settings.json');
-let cConsole = console;
-if (require('../../functions/isModuleInstalled').execute('console')) {
+const isModuleInstalled = require('../../functions/isModuleInstalled').execute;
+const messages = require(`../../.${settings.generic.path.files.messages}${settings.generic.lang}.json`);
+
+let cConsole: any = console;
+if (isModuleInstalled('console')) {
     cConsole = {
         clear: require(`../../.${settings.generic.path.files.modules}console/functions/clear`).execute,
         log: require(`../../.${settings.generic.path.files.modules}console/functions/log`).execute,

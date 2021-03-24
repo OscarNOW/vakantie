@@ -1,7 +1,10 @@
-const fs = require('fs');
-const readdirSync = fs.readdirSync;
-const existsSync = fs.existsSync;
-const lstatSync = fs.lstatSync;
+import * as fs from 'fs';
+const isModuleInstalled = require('../../functions/isModuleInstalled').execute;
+const parseErrorRaw = require('../../functions/error/parseErrorRaw').execute;
+const evalErrors = require('../../functions/error/evalErrors').execute;
+
+import * as settings from '../../../settings.json';
+const messages = require(`../../.${settings.generic.path.files.messages}${settings.generic.lang}.json`);
 
 const generic = require('../../../settings.json').generic;
 let api = {};
@@ -10,15 +13,15 @@ let api = {};
 addApiCalls('/', generic.path.files.api);
 
 //Load module api
-readdirSync(generic.path.files.modules).forEach(moduleName => {
+fs.readdirSync(generic.path.files.modules).forEach(moduleName => {
     let apiPath = generic.path.files.moduleApi.replace('{modules}', generic.path.files.modules).replace('{name}', moduleName);
     addApiCalls('/', apiPath);
 })
 
 function addApiCalls(websitePath, path) {
-    if (existsSync(path)) {
-        readdirSync(path).forEach((apiName) => {
-            if (lstatSync(`${path}${apiName}/`).isDirectory()) {
+    if (fs.existsSync(path)) {
+        fs.readdirSync(path).forEach((apiName) => {
+            if (fs.lstatSync(`${path}${apiName}/`).isDirectory()) {
                 addApiCalls(`${websitePath}${apiName}/`, `${path}${apiName}/`);
             } else {
                 let req = require(`../../../${path}${apiName}`);
@@ -27,7 +30,7 @@ function addApiCalls(websitePath, path) {
                 let dependenciesNotInstalled = [];
                 if (req.dependencies && req.dependencies.modules) {
                     req.dependencies.modules.forEach((val) => {
-                        if (!existsSync(`${generic.path.files.modules}${val}/`)) {
+                        if (!fs.existsSync(`${generic.path.files.modules}${val}/`)) {
                             dependenciesInstalled = false;
                             dependenciesNotInstalled.push(val);
                         }

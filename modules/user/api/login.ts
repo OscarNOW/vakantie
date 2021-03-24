@@ -1,4 +1,4 @@
-const fs = require('fs');
+import * as fs from 'fs';
 const settings = require('../settings.json');
 const mSettings = require('../../../settings.json');
 const messages = require(`../${settings.path.files.messages}${mSettings.generic.lang}.json`);
@@ -14,7 +14,8 @@ module.exports = {
 		const { statusCode, error, end, request, params } = argument;
 
 		try {
-			userdatabase = JSON.parse(fs.readFileSync(`${mSettings.generic.path.files.modules}user/${settings.path.files.userdatabase}`));
+			let stringUD: any = fs.readFileSync(`${mSettings.generic.path.files.modules}user/${settings.path.files.userdatabase}`);
+			userdatabase = JSON.parse(stringUD);
 		} catch (err) {
 			return error(err, messages.error.databaseRead);
 		}
@@ -54,21 +55,6 @@ module.exports = {
 			return end(JSON.stringify({ code: 200, loginToken }));
 		} else {
 			//Maak nieuwe loginToken
-			if (!params[settings.path.online.deviceCookie]) newDeviceCookie =
-				settings.letters.deviceCookie											//Letter for device cookie
-				+
-				require('../../random/random.js').execute(
-					10,
-					require('../../random/getChars.js').execute(
-						{
-							letters: true,
-							confusingLetters: false,
-							numbers: true,
-							confusingNumbers: false
-						}
-					)
-				);
-
 
 			let newToken =
 				settings.letters.loginToken

@@ -1,5 +1,5 @@
 const fs = require('fs');
-const settings = require('../../settings.json');
+import * as settings from '../../settings.json';
 
 module.exports = {
     execute(name) {

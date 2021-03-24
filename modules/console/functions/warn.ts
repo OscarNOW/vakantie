@@ -1,9 +1,9 @@
-const fs = require('fs');
-const settings = require('../settings.json')
+import * as fs from 'fs';
+import * as settings from '../settings.json';
 
 module.exports = {
     execute(text) {
-        let cConsole = fs.readFileSync(`.${settings.path.files.console}`);
+        let cConsole: string, buffer = fs.readFileSync(`.${settings.path.files.console}`);
         cConsole = `${cConsole}${text}\n`;
         fs.writeFileSync(`.${settings.path.files.console}`, cConsole);
 

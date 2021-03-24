@@ -1,4 +1,4 @@
-const settings = require('./settings.json');
+import * as settings from './settings.json';
 
 module.exports = {
     execute(i) {

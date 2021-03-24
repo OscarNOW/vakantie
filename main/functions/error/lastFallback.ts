@@ -1,7 +1,8 @@
 const fs = require('fs');
 const settings = require('../../../settings.json');
 const http = require('http');
-let cConsole = console;
+
+let cConsole: any = console;
 if (require('../../functions/isModuleInstalled').execute('console')) {
     cConsole = {
         clear: require(`../../.${settings.generic.path.files.modules}console/functions/clear`).execute,

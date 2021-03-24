@@ -1,4 +1,4 @@
-const fs = require('fs');
+import * as fs from 'fs';
 const settings = require('../settings.json');
 const mSettings = require('../../../settings.json');
 const messages = require(`../${settings.path.files.messages}${mSettings.generic.lang}.json`);
@@ -10,14 +10,17 @@ module.exports = {
 		const { statusCode, error, end, params } = argument;
 
 		try {
-			userdatabase = JSON.parse(fs.readFileSync(`${mSettings.generic.path.files.modules}user/${settings.path.files.userdatabase}`));
+			let stringUD: any = fs.readFileSync(`${mSettings.generic.path.files.modules}user/${settings.path.files.userdatabase}`)
+			userdatabase = JSON.parse(stringUD);
 		} catch (err) {
 			return error(err, messages.error.databaseRead);
 		}
 		if (!params[settings.path.online.loginToken]) return statusCode(400, mMessages.error.notGiven.replace('{argument}', settings.path.online.loginToken));
 		let isValidToken = false;
 		let uin = null;
-		for (const [key, value] of Object.entries(userdatabase)) {
+		for (const [key, v] of Object.entries(userdatabase)) {
+			let value: any = v;
+
 			if (value.login.tokens[params[settings.path.online.loginToken]]) {
 				isValidToken = true;
 				uin = key;

@@ -36,7 +36,7 @@ module.exports = {
                 let date = new Date().getTime();
                 let fileName = `${Math.floor(Math.random() * 100000000)}.json`;
                 let path = `${settings.generic.path.files.errors}${fileName}`;
-                let obj = {
+                let obj: errorFile = {
                     errorMessage: errorMessage.split('\n')[0],
                     occurrences: [
                         {
@@ -60,7 +60,7 @@ module.exports = {
                 let path = `${settings.generic.path.files.errors}${sameFile}`;
                 let oldObj = require(path);
 
-                let obj = {
+                let obj: errorObject = {
                     time: date,
                     stack: errorMessage.split('\n')
                 };
@@ -80,4 +80,16 @@ module.exports = {
             require('../../../index').lastFallback(err);
         }
     }
+}
+
+interface errorObject {
+    time: number,
+    stack: string,
+    easyAccesPath?: string,
+    customText?: string
+}
+
+interface errorFile {
+    errorMessage: string,
+    occurrences: errorObject[]
 }
