@@ -1,6 +1,14 @@
 const fs = require('fs');
 const settings = require('../../../settings.json');
-const http = require('http')
+const http = require('http');
+let cConsole = console;
+if (require('../../functions/isModuleInstalled').execute('console')) {
+    cConsole = {
+        clear: require(`../../.${settings.generic.path.files.modules}console/functions/clear`).execute,
+        log: require(`../../.${settings.generic.path.files.modules}console/functions/log`).execute,
+        warn: require(`../../.${settings.generic.path.files.modules}console/functions/warn`).execute
+    }
+}
 
 let amountError = 0;
 let lastError = '';
@@ -22,19 +30,19 @@ module.exports = {
         fs.writeFileSync(`${settings.generic.path.files.errors}RAW1-${amountError}-${Math.floor(Math.random() * 1000)}.txt`, data);
 
         if (amountError > 5) retry = false;
-        console.clear();
+        cConsole.clear();
 
         if (retry) {
 
             countDown(5, 1000, ii => {
-                console.clear();
-                console.log(`Retrying in ${ii} seconds...`);
+                cConsole.clear();
+                cConsole.log(`Retrying in ${ii} seconds...`);
             });
 
             setTimeout(callback, 5000);
 
         } else {
-            console.log('No retry, because of looping error')
+            cConsole.log('No retry, because of looping error')
         }
 
     },
@@ -42,7 +50,7 @@ module.exports = {
         return http.createServer((r, response) => {
             response.writeHead(500, "The server has an extreme error, please try again later");
             response.end("The server has an extreme error, please try again later");
-            console.error("New request in extreme error mode")
+            cConsole.warn("New request in extreme error mode")
         });
     }
 }
