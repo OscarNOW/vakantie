@@ -1,4 +1,3 @@
-const fs = require('fs');
 const http = require('http');
 const settings = require('./settings.json');
 
@@ -6,8 +5,6 @@ let server;
 let extremeErrorMode = false;
 
 try {
-
-	throw 'err';
 
 	server = http.createServer(                         //Create server
 		require('./main/server/main').execute           //Server function
