@@ -16,9 +16,7 @@ module.exports = {
 		}
 		if (!params[settings.path.online.loginToken]) return statusCode(400, mMessages.error.notGiven.replace('{argument}', settings.path.online.loginToken));
 		let uin = null;
-		for (const [key, v] of Object.entries(userdatabase)) {
-			let value: any = v;
-
+		for (const [key, value] of Object.entries(userdatabase)) {
 			if (value.login.tokens[params[settings.path.online.loginToken]]) uin = key;
 		}
 		if (!uin) return statusCode(400, mMessages.error.notValid.replace('{argument}', settings.path.online.loginToken));
@@ -26,7 +24,7 @@ module.exports = {
 		let devices = [];
 
 		for (const [key, value] of Object.entries(userdatabase[uin].login.tokens)) {
-			let out: any = value;
+			let out = value;
 			if (out.cookie) delete out.cookie;
 			if (out.lang.length > 1) out.lang = [out.lang[0]];
 			if (out.lang && out.lang[0].quality) delete out.lang[0].quality;

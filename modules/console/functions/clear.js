@@ -1,5 +1,5 @@
-import * as fs from 'fs'
-import * as settings from '../settings.json'
+const fs = require('fs');
+const settings = require('../settings.json');
 
 module.exports = {
     execute() {

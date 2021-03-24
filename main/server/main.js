@@ -1,9 +1,9 @@
-import * as settings from '../../settings.json';
+const settings = require('../../settings.json')
 const parseErrorOnline = require('../functions/error/parseErrorOnline').execute;
 
 module.exports = {
     async execute(request, response) {
-        let parseError = (error, customText?) => parseErrorOnline(error, response, customText);
+        let parseError = (error, customText) => parseErrorOnline(error, response, customText);
 
         try {
             if (request.url.toLowerCase().startsWith(settings.generic.path.online.api)) {

@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+const fs = require('fs');
 const settings = require('../settings.json');
 const mSettings = require('../../../settings.json');
 const mMessages = require(`../../../${mSettings.generic.path.files.messages}${mSettings.generic.lang}.json`);
@@ -14,8 +14,7 @@ module.exports = {
 		const { statusCode, error, end, params } = argument;
 
 		try {
-			let stringUD: any = fs.readFileSync(`${mSettings.generic.path.files.modules}user/${settings.path.files.userdatabase}`)
-			userdatabase = JSON.parse(stringUD);
+			userdatabase = JSON.parse(fs.readFileSync(`${mSettings.generic.path.files.modules}user/${settings.path.files.userdatabase}`));
 		} catch (err) {
 			return error(err, messages.error.databaseRead);
 		}
@@ -26,16 +25,14 @@ module.exports = {
 
 		let alreadyExist = false;
 
-		for (const [key, v] of Object.entries(userdatabase)) {
-			let value: any = v;
-
+		for (const [key, value] of Object.entries(userdatabase)) {
 			if (value.login.cridentials.email == params[settings.path.online.email]) alreadyExist = true;
 		}
 
 		if (alreadyExist) return statusCode(400, messages.error.sameEmailAlreadyExist);
 		if (!params[settings.path.online.password]) return statusCode(400, mMessages.error.notGiven.replace('{argument}', settings.path.online.password));
 
-		let userObject: userObject = {
+		let userObject = {
 			login: {
 				cridentials: {
 					email: params[settings.path.online.email],
@@ -73,44 +70,3 @@ module.exports = {
 		end(JSON.stringify({ code: 200, uin }));
 	}
 };
-
-interface userObject {
-	login: {
-		cridentials: {
-			password: string,
-			email: string
-		},
-		tokens?: requestInfo[]
-	},
-	publicSettings?: {
-		[key: string]: boolean
-	},
-	displayName?: string
-}
-
-interface requestInfo {
-	ip?: {
-		value: string
-	},
-	cookie?: string,
-	browser?: {
-		name?: string,
-		version?: number[]
-	},
-	os?: {
-		name?: string,
-		version?: number[]
-	},
-	device?: {
-		name: string
-	},
-	lang?: {
-		name: string,
-		region?: string,
-		quality: number
-	}[],
-	screen?: {
-		width?: number,
-		height?: number
-	}
-}

@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+const fs = require('fs');
 const settings = require('../settings.json');
 const mSettings = require('../../../settings.json');
 const messages = require(`../${settings.path.files.messages}${mSettings.generic.lang}.json`);
@@ -10,8 +10,7 @@ module.exports = {
 		const { statusCode, error, end, params } = argument;
 
 		try {
-			let stringUD: any = fs.readFileSync(`${mSettings.generic.path.files.modules}user/${settings.path.files.userdatabase}`)
-			userdatabase = JSON.parse(stringUD);
+			userdatabase = JSON.parse(fs.readFileSync(`${mSettings.generic.path.files.modules}user/${settings.path.files.userdatabase}`));
 		} catch (err) {
 			return error(err, messages.error.databaseRead);
 		}
@@ -22,8 +21,7 @@ module.exports = {
 			let hasValidLoginToken = false;
 			let uin = null;
 
-			for (const [key, v] of Object.entries(userdatabase)) {
-				let value: any = v;
+			for (const [key, value] of Object.entries(userdatabase)) {
 				if (value.login.tokens[params[settings.path.online.loginToken]]) {
 					hasValidLoginToken = true;
 					uin = key;
@@ -31,8 +29,7 @@ module.exports = {
 			}
 			if (!hasValidLoginToken) return statusCode(401, mMessages.error.notValid.replace('{argument}', settings.path.online.loginToken));
 
-			for (const [key, v] of Object.entries(settings.defaultAccountPublicSettings)) {
-				let value: any = v;
+			for (const [key, value] of Object.entries(settings.defaultAccountPublicSettings)) {
 				if (value.editable || value.default == true) {
 					let addObject = findCorrectValue(' > ', userdatabase[uin], key);
 					publicUserObject = addToObject(publicUserObject, addObject, key, ' > ');
@@ -43,8 +40,7 @@ module.exports = {
 			let uin = params[settings.path.online.account];
 			if (!userdatabase[uin]) return statusCode(400, mMessages.error.notValid.replace('{argument}', settings.path.online.account));
 
-			for (const [key, v] of Object.entries(settings.defaultAccountPublicSettings)) {
-				let value: any = v;
+			for (const [key, value] of Object.entries(settings.defaultAccountPublicSettings)) {
 				let isPublic = false;
 				if (!value.editable) isPublic = value.default;
 				if (value.editable && userdatabase[uin].publicSettings[key] == undefined) isPublic = value.default;
@@ -54,9 +50,7 @@ module.exports = {
 				}
 			}
 
-			for (const [key, v] of Object.entries(userdatabase[uin].publicSettings)) {
-				let value: any = v;
-
+			for (const [key, value] of Object.entries(userdatabase[uin].publicSettings)) {
 				let isPublic = false;
 				if (settings.defaultAccountPublicSettings[key] && settings.defaultAccountPublicSettings[key].editable == true) isPublic = value;
 

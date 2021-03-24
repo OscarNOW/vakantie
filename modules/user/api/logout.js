@@ -18,9 +18,7 @@ module.exports = {
 
 		let isValidToken = false;
 		let uin = null;
-		for (const [key, v] of Object.entries(userdatabase)) {
-			let value: any = v;
-
+		for (const [key, value] of Object.entries(userdatabase)) {
 			if (value.login.tokens[params[settings.path.online.loginToken]]) {
 				isValidToken = true;
 				uin = key;

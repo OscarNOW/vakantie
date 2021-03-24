@@ -1,5 +1,5 @@
 const fs = require('fs');
-import * as settings from '../../../settings.json';
+const settings = require('../../../settings.json');
 const messages = require(`../../.${settings.generic.path.files.messages}${settings.generic.lang}.json`);
 const mime = require('mime-types');
 
@@ -11,7 +11,7 @@ module.exports = {
         let customText = extra.text;
         let text = '';
 
-        let errorMessage = messages.httpStatusCodes[parseFloat((code + '').split('')[0]) * 100];
+        let errorMessage = messages.httpStatusCodes[(code + '').split('')[0] * 100];
         if (errorMessage) if (errorMessage[code]) text += errorMessage[code];
 
         let path = settings.generic.path.files.errorFile.replace('{files}', settings.generic.path.files.files);

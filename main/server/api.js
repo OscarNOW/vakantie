@@ -1,5 +1,5 @@
 const api = require('../setup/preload/api.js').execute();
-import * as settings from '../../settings.json';
+const settings = require('../../settings.json');
 const messages = require(`../../${settings.generic.path.files.messages}${settings.generic.lang}.json`);
 
 const isModuleInstalled = require('../functions/isModuleInstalled.js').execute;

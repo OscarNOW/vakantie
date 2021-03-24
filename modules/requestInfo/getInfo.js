@@ -8,7 +8,7 @@ module.exports = {
 
 		let ip = (request.headers['x-forwarded-for'] || '').split(',').pop().trim() || request.connection.remoteAddress || request.socket.remoteAddress || request.connection.socket.remoteAddress;
 
-		let object: requestInfo = {};
+		let object = {};
 
 		if (ip)
 			object.ip = {
@@ -48,7 +48,7 @@ module.exports = {
 				quality = parseFloat(val.split(';')[1].split('q=')[1]);
 			}
 
-			let out: any = {
+			let out = {
 				name: lang,
 				quality
 			};
@@ -63,30 +63,3 @@ module.exports = {
 		return object;
 	}
 };
-
-interface requestInfo {
-	ip?: {
-		value: string
-	},
-	cookie?: string,
-	browser?: {
-		name?: string,
-		version?: number[]
-	},
-	os?: {
-		name?: string,
-		version?: number[]
-	},
-	device?: {
-		name: string
-	},
-	lang?: {
-		name: string,
-		region?: string,
-		quality: number
-	}[],
-	screen?: {
-		width?: number,
-		height?: number
-	}
-}
