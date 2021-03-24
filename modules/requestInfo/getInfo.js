@@ -2,7 +2,7 @@ const sniffr = require('sniffr');
 
 module.exports = {
 	dependencies: {},
-	getRequestInfo(request, cookie) {
+	execute(request, cookie) {
 		const s = new sniffr();
 		s.sniff(request.headers['user-agent']);
 

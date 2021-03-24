@@ -57,8 +57,9 @@ module.exports = {
                 return `${fileName}`;
             } else {
                 let date = new Date().getTime();
-                let path = `${settings.generic.path.files.errors}${sameFile}`;
-                let oldObj = require(path);
+                let requirePath = `../../.${settings.generic.path.files.errors}${sameFile}`;
+                let fsPath = `${settings.generic.path.files.errors}${sameFile}`;
+                let oldObj = require(requirePath);
 
                 let obj = {
                     time: date,
@@ -73,7 +74,7 @@ module.exports = {
 
                 if (customText) obj.customText = customText;
                 oldObj.occurrences.push(obj);
-                writeFileSync(path, JSON.stringify(oldObj));
+                writeFileSync(fsPath, JSON.stringify(oldObj));
                 return sameFile;
             }
         } catch (err) {

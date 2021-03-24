@@ -29,7 +29,7 @@ module.exports = {
             amountError = 1;
         }
 
-        let data = `${err}\n\n\nStack:\n${new Error(`${err}`).stack.split('\n').splice(1).join('\n')}`
+        let data = `${`${err}`.split('\n')[0]}\n\n\nStack:\n${err.stack.split('\n').splice(1).join('\n')}`
 
         fs.writeFileSync(`${settings.generic.path.files.errors}RAW1-${amountError}-${Math.floor(Math.random() * 1000)}.txt`, data);
 
