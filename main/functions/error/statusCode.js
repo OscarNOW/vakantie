@@ -1,6 +1,11 @@
 const fs = require('fs');
 const settings = require('../../../settings.json');
-const messages = require(`../../.${settings.generic.path.files.messages}${settings.generic.lang}.json`);
+let messages;
+try {
+    messages = require(`../../.${settings.generic.path.files.messages}${settings.generic.lang}.json`);
+} catch (err) {
+    messages = undefined;
+}
 const mime = require('mime-types');
 
 module.exports = {
@@ -11,8 +16,11 @@ module.exports = {
         let customText = extra.text;
         let text = '';
 
-        let errorMessage = messages.httpStatusCodes[(code + '').split('')[0] * 100];
-        if (errorMessage) if (errorMessage[code]) text += errorMessage[code];
+        let errorMessage;
+        if (messages)
+            messages.httpStatusCodes[(code + '').split('')[0] * 100];
+
+        if (errorMessage) if (errorMessage[code]) text = errorMessage[code];
 
         let path = settings.generic.path.files.errorFile.replace('{files}', settings.generic.path.files.files);
 
@@ -20,7 +28,7 @@ module.exports = {
             if (err) throw err;
             let newData = data;
 
-            let newText = newData.toString('utf-8').replace('|errorCode|', code).replace('|errorCodeMessage|', text).replace('|reloadText|', messages.error.reload);
+            let newText = newData.toString('utf-8').replace('|errorCode|', code).replace('|errorCodeMessage|', text).replace('|reloadText|', messages ? messages.error.reload : 'Reload');
             newData = Buffer.from(newText, 'utf-8');
 
             if (errorFile) {

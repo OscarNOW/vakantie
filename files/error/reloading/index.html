@@ -50,8 +50,12 @@
                     bar.style.width = `100%`;
                     countDownDone();
                 } else {
+                    let oldWith = bar.style.width.split('%')[0];
                     let currentWidth = ii + getRandom(randomOffset * -1, randomOffset);
-                    bar.style.width = `${currentWidth}%`
+
+                    if (currentWidth > oldWith) {
+                        bar.style.width = `${currentWidth}%`
+                    }
                 }
             })
         }

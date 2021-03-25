@@ -2,8 +2,10 @@ const settings = require('../../settings.json')
 const parseErrorOnline = require('../functions/error/parseErrorOnline').execute;
 
 module.exports = {
-    async execute(request, response) {
+    execute(request, response) {
         let parseError = (error, customText) => parseErrorOnline(error, response, customText);
+
+        throw 'newErr';
 
         try {
             if (request.url.toLowerCase().startsWith(settings.generic.path.online.api)) {
