@@ -2,7 +2,7 @@ const fs = require('fs');
 const settings = require('../settings.json');
 const mSettings = require('../../../settings.json');
 const messages = require(`../${settings.path.files.messages}${mSettings.generic.lang}.json`);
-const mMessages = require(`../../../${mSettings.generic.path.files.messages}${mSettings.generic.lang}.json`);
+const gmMessages = require('../../../main/functions/get/messages').execute().mainFunction();
 let userdatabase = require(`../${settings.path.files.userdatabase}`);
 const sha256 = require('js-sha256').sha256;
 
@@ -19,12 +19,12 @@ module.exports = {
 			return error(err, messages.error.databaseRead);
 		}
 
-		if (!params[settings.path.online.account]) return statusCode(400, mMessages.error.notGiven.replace('{argument}', settings.path.online.account));
+		if (!params[settings.path.online.account]) return statusCode(400, gmMessages.error.notGiven.replace('{argument}', settings.path.online.account));
 
 		let uin = params[settings.path.online.account];
 
-		if (!userdatabase[uin]) return statusCode(400, mMessages.error.notValid.replace('{argument}', settings.path.online.account));
-		if (!params[settings.path.online.password]) return statusCode(400, mMessages.error.notGiven.replace('{argument}', settings.path.online.password));
+		if (!userdatabase[uin]) return statusCode(400, gmMessages.error.notValid.replace('{argument}', settings.path.online.account));
+		if (!params[settings.path.online.password]) return statusCode(400, gmMessages.error.notGiven.replace('{argument}', settings.path.online.password));
 		if (sha256(params[settings.path.online.password]) != userdatabase[uin].login.cridentials.password) return statusCode(400, messages.error.wrongPassword);
 
 		if (!userdatabase[uin].login.tokens) userdatabase[uin].login.tokens = {};

@@ -1,6 +1,5 @@
 const api = require('../setup/preload/api.js').execute();
 const settings = require('../../settings.json');
-const messages = require(`../../${settings.generic.path.files.messages}${settings.generic.lang}.json`);
 
 const isModuleInstalled = require('../functions/isModuleInstalled.js').execute;
 const statusCode = require('../functions/error/statusCode.js').execute;
@@ -8,6 +7,8 @@ const parseErrorOnline = require('../functions/error/parseErrorOnline.js');
 
 module.exports = {
     execute(request, response) {
+        let messages = require('../functions/get/messages').execute({ request }).mainFunction();
+
         let parseError = (error, customText) => parseErrorOnline(error, response, customText);
 
         let { path, params } = require('../functions/parse/apiCall.js').execute(request.url);

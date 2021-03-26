@@ -1,11 +1,11 @@
 const fs = require('fs');
 const settings = require('../../../settings.json');
-let messages;
+let gMessages;
 
 try {
-    messages = require(`../../.${settings.generic.path.files.messages}${settings.generic.lang}.json`);
+    gMessages = require('../get/messages').execute().mainFunction();
 } catch {
-    messages = undefined;
+    gMessages = undefined;
 }
 
 let extremeErrorMode = false;
@@ -79,6 +79,13 @@ module.exports = {
         cConsole.warn("New request in extreme error mode")
     },
     reloadServer(r, response) {
+        let messages;
+        try {
+            messages = require('../get/messages').execute({ request: r }).mainFunction();
+        } catch {
+            messages = gMessages;
+        }
+
         let reloadingPath = settings.generic.path.files.reloadingFile.replace('{files}', settings.generic.path.files.files);
         response.writeHead(500, "Because of an extreme error, the server is reloading in 5 seconds");
         try {

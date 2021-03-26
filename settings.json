@@ -2,7 +2,10 @@
     "generic": {
         "websiteUrl": "localhost",
         "port": "80",
-        "lang": "nl",
+        "lang": [
+            "nl",
+            "en"
+        ],
         "path": {
             "files": {
                 "messages": "./messages/",

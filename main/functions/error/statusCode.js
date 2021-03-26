@@ -1,10 +1,10 @@
 const fs = require('fs');
 const settings = require('../../../settings.json');
-let messages;
+let gMessages;
 try {
-    messages = require(`../../.${settings.generic.path.files.messages}${settings.generic.lang}.json`);
+    gMessages = require(`../../.${settings.generic.path.files.messages}${settings.generic.lang}.json`);
 } catch (err) {
-    messages = undefined;
+    gMessages = undefined;
 }
 const mime = require('mime-types');
 
@@ -17,8 +17,8 @@ module.exports = {
         let text = '';
 
         let errorMessage;
-        if (messages)
-            messages.httpStatusCodes[(code + '').split('')[0] * 100];
+        if (gMessages)
+            errorMessage = gMessages.httpStatusCodes[(code + '').split('')[0] * 100];
 
         if (errorMessage) if (errorMessage[code]) text = errorMessage[code];
 
@@ -28,7 +28,7 @@ module.exports = {
             if (err) throw err;
             let newData = data;
 
-            let newText = newData.toString('utf-8').replace('|errorCode|', code).replace('|errorCodeMessage|', text).replace('|reloadText|', messages ? messages.error.reload : 'Reload');
+            let newText = newData.toString('utf-8').replace('|errorCode|', code).replace('|errorCodeMessage|', text).replace('|reloadText|', gMessages ? gMessages.error.reload : 'Reload');
             newData = Buffer.from(newText, 'utf-8');
 
             if (errorFile) {

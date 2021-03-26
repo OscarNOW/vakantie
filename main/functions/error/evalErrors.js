@@ -1,6 +1,6 @@
 const readdir = require('fs').readdir
 const settings = require('../../../settings.json');
-const messages = require(`../../.${settings.generic.path.files.messages}${settings.generic.lang}.json`);
+const messages = require('../get/messages').execute().mainFunction();
 const isModuleInstalled = require('../isModuleInstalled').execute;
 
 let cConsole = console;

@@ -1,5 +1,4 @@
-const mSettings = require('../../settings.json');
-const messages = require(`./messages/${mSettings.generic.lang}.json`);
+const messages = require('../../main/functions/get/messages').execute().mainFunction();
 
 module.exports = {
 	createList(words) {
