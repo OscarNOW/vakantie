@@ -1,0 +1,45 @@
+{
+    "ip": {
+        "value": "85.147.104.68"
+    },
+    "browser": {
+        "name": "chrome",
+        "version": [
+            89,
+            0,
+            4389,
+            90
+        ]
+    },
+    "os": {
+        "name": "windows",
+        "version": [
+            10,
+            0
+        ]
+    },
+    "lang": [
+        {
+            "name": "nl",
+            "quality": 1,
+            "region": "NL"
+        },
+        {
+            "name": "nl",
+            "quality": 0.9
+        },
+        {
+            "name": "en",
+            "quality": 0.8,
+            "region": "US"
+        },
+        {
+            "name": "en",
+            "quality": 0.7
+        },
+        {
+            "name": "la",
+            "quality": 0.6
+        }
+    ]
+}

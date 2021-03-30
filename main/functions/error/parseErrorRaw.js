@@ -21,9 +21,10 @@ module.exports = {
 
             let files = readdirSync(settings.generic.path.files.errors);
 
-            files.forEach((file) => {
-                // ../../.
-                let data = require(`${settings.generic.path.files.errors}${file}`);
+            files.forEach(file => {
+                if (file == settings.generic.path.files.noError) return;
+
+                let data = require(`../../.${settings.generic.path.files.errors}${file}`);
 
                 if (data.errorMessage.split(': ')[1] == errorMessage.split('\n')[0].split(': ')[1]) {
                     fileIsSpecial = false;
@@ -56,8 +57,9 @@ module.exports = {
                 return `${fileName}`;
             } else {
                 let date = new Date().getTime();
-                let path = `${settings.generic.path.files.errors}${sameFile}`;
-                let oldObj = require(path);
+                let requirePath = `../../.${settings.generic.path.files.errors}${sameFile}`;
+                let fsPath = `${settings.generic.path.files.errors}${sameFile}`;
+                let oldObj = require(requirePath);
 
                 let obj = {
                     time: date,
@@ -72,11 +74,11 @@ module.exports = {
 
                 if (customText) obj.customText = customText;
                 oldObj.occurrences.push(obj);
-                writeFileSync(path, JSON.stringify(oldObj));
+                writeFileSync(fsPath, JSON.stringify(oldObj));
                 return sameFile;
             }
         } catch (err) {
-            require('./')
+            require('./lastFallback').execute(err)
         }
     }
 }

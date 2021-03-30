@@ -1,18 +1,18 @@
 const fs = require('fs');
 const settings = require('../settings.json');
 const mSettings = require('../../../settings.json');
-const messages = require(`../${settings.path.files.messages}${mSettings.generic.lang}.json`);
-const mMessages = require(`../../../${mSettings.generic.path.files.messages}${mSettings.generic.lang}.json`);
+const pMessages = require(`../${settings.path.files.messages}${mSettings.generic.lang}.json`);
 let userdatabase = require(`../${settings.path.files.userdatabase}`);
 
 module.exports = {
 	execute(argument) {
-		const { statusCode, error, end, params } = argument;
+		const { statusCode, error, end, params, request } = argument;
+		const mMessages = require('../../../main/functions/get/messages').execute({ request }).mainFunction();
 
 		try {
 			userdatabase = JSON.parse(fs.readFileSync(`${mSettings.generic.path.files.modules}user/${settings.path.files.userdatabase}`));
 		} catch (err) {
-			return error(err, messages.error.databaseRead);
+			return error(err, pMessages.error.databaseRead);
 		}
 
 		let publicUserObject = {};

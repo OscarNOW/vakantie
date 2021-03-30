@@ -17,11 +17,12 @@ module.exports = {
 
             let file = parseErrorRaw(error, customText);
 
-            evalErrors(`${file}`);
+            evalErrors();
             file = file.split('.txt')[0];
             return statusCode(response, 500, { errorFile: file, text: customText });
         } catch (err) {
-            throw err;
+            statusCode(response, 500)
+            require('./lastFallback').execute(err);
         }
     }
 }

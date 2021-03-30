@@ -1,9 +1,22 @@
 const http = require('http');
 const settings = require('./settings.json');
 
-//Evaluate errors
-require('./main/functions/error/evalErrors').execute();
+let server;
 
-http.createServer(                                  //Create server
-    require('./main/server/main').execute           //Server function
-).listen(process.env.PORT || settings.generic.port);//Listen to server
+server = http.createServer(                         				//Create server
+	require('./main/functions/error/lastFallback').serverExecute	//Error handler
+);
+
+try {
+
+	//Evaluate errors
+	require('./main/functions/error/evalErrors').execute();
+
+} catch { }
+
+
+server.listen(						//Listen to server
+	process.env.PORT				//If hosted on heroku
+	||
+	settings.generic.port			//Else
+);
