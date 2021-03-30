@@ -10,7 +10,7 @@
             "files": {
                 "messages": "./messages/",
                 "api": "./api/",
-                "errors": "./errors/",
+                "errors": "./logs/errors/",
                 "files": "./files",
                 "errorFile": "{files}/error/general/index.html",
                 "reloadingFile": "{files}/error/reloading/index.html",
