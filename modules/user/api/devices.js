@@ -26,7 +26,7 @@ module.exports = {
 		for (const [key, value] of Object.entries(userdatabase[uin].login.tokens)) {
 			let out = value;
 			if (out.cookie) delete out.cookie;
-			if (out.lang.length > 1) out.lang = [out.lang[0]];
+			if (out.lang.length > 1) out.lang = out.lang[0];
 			if (out.lang && out.lang[0].quality) delete out.lang[0].quality;
 			if (out.browser && out.browser.version) delete out.browser.version;
 			if (out.ip) delete out.ip;

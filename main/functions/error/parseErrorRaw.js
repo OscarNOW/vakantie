@@ -5,73 +5,78 @@ const settings = require('../../../settings.json');
 
 module.exports = {
     execute(error, customText) {
-        let errorMessage = error.stack;
-        if (errorMessage === undefined) {
-            if (`${error}`) {
-                errorMessage = new Error(`${error}`).stack;
+        try {
+            let errorMessage = error.stack;
+            if (errorMessage === undefined) {
+                if (`${error}`) {
+                    errorMessage = new Error(`${error}`).stack;
+                } else {
+                    error = new Error('Error message is undefined');
+                    errorMessage = error.stack;
+                }
+            }
+
+            let fileIsSpecial = true;
+            let sameFile;
+
+            let files = readdirSync(settings.generic.path.files.errors);
+
+            files.forEach((file) => {
+                // ../../.
+                let data = require(`${settings.generic.path.files.errors}${file}`);
+
+                if (data.errorMessage.split(': ')[1] == errorMessage.split('\n')[0].split(': ')[1]) {
+                    fileIsSpecial = false;
+                    sameFile = file;
+                }
+            });
+
+            if (fileIsSpecial) {
+                let date = new Date().getTime();
+                let fileName = `${Math.floor(Math.random() * 100000000)}.json`;
+                let path = `${settings.generic.path.files.errors}${fileName}`;
+                let obj = {
+                    errorMessage: errorMessage.split('\n')[0],
+                    occurrences: [
+                        {
+                            time: date,
+                            stack: errorMessage.split('\n')
+                        }
+                    ]
+                };
+
+                let easyAccesPath = null;
+                try {
+                    easyAccesPath = errorMessage.split('\n')[1].split('(')[1].split(')')[0];
+                } catch { }
+                if (easyAccesPath) obj.occurrences[0].easyAccesPath = easyAccesPath;
+
+                if (customText) obj.occurrences[0].customText = customText;
+                writeFileSync(path, JSON.stringify(obj));
+                return `${fileName}`;
             } else {
-                error = new Error('Error message is undefined');
-                errorMessage = error.stack;
+                let date = new Date().getTime();
+                let path = `${settings.generic.path.files.errors}${sameFile}`;
+                let oldObj = require(path);
+
+                let obj = {
+                    time: date,
+                    stack: errorMessage.split('\n')
+                };
+
+                let easyAccesPath = null;
+                try {
+                    easyAccesPath = errorMessage.split('\n')[1].split('(')[1].split(')')[0];
+                } catch { }
+                if (easyAccesPath) obj.easyAccesPath = easyAccesPath;
+
+                if (customText) obj.customText = customText;
+                oldObj.occurrences.push(obj);
+                writeFileSync(path, JSON.stringify(oldObj));
+                return sameFile;
             }
-        }
-
-        let fileIsSpecial = true;
-        let sameFile;
-
-        let files = readdirSync(settings.generic.path.files.errors);
-
-        files.forEach((file) => {
-            let data = require(`${settings.generic.path.files.errors}${file}`);
-
-            if (data.errorMessage.split(': ')[1] == errorMessage.split('\n')[0].split(': ')[1]) {
-                fileIsSpecial = false;
-                sameFile = file;
-            }
-        });
-
-        if (fileIsSpecial) {
-            let date = new Date().getTime();
-            let fileName = `${Math.floor(Math.random() * 100000000)}.json`;
-            let path = `${settings.generic.path.files.errors}${fileName}`;
-            let obj = {
-                errorMessage: errorMessage.split('\n')[0],
-                occurrences: [
-                    {
-                        time: date,
-                        stack: errorMessage.split('\n')
-                    }
-                ]
-            };
-
-            let easyAccesPath = null;
-            try {
-                easyAccesPath = errorMessage.split('\n')[1].split('(')[1].split(')')[0];
-            } catch { }
-            if (easyAccesPath) obj.occurrences[0].easyAccesPath = easyAccesPath;
-
-            if (customText) obj.occurrences[0].customText = customText;
-            writeFileSync(path, JSON.stringify(obj));
-            return `${fileName}`;
-        } else {
-            let date = new Date().getTime();
-            let path = `${settings.generic.path.files.errors}${sameFile}`;
-            let oldObj = require(path);
-
-            let obj = {
-                time: date,
-                stack: errorMessage.split('\n')
-            };
-
-            let easyAccesPath = null;
-            try {
-                easyAccesPath = errorMessage.split('\n')[1].split('(')[1].split(')')[0];
-            } catch { }
-            if (easyAccesPath) obj.easyAccesPath = easyAccesPath;
-
-            if (customText) obj.customText = customText;
-            oldObj.occurrences.push(obj);
-            writeFileSync(path, JSON.stringify(oldObj));
-            return sameFile;
+        } catch (err) {
+            require('./')
         }
     }
 }
