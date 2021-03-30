@@ -8,7 +8,15 @@ if (isModuleInstalled('requestInfo')) {
 }
 
 module.exports = {
-    execute({ files, request }) {
+    execute(argument) {
+        let files;
+        let request;
+
+        if (argument) {
+            if (argument.file) files = argument.files;
+            if (argument.request) files = argument.request;
+        }
+
         let options = [];
         if (!files)
             files = fs.readdirSync(settings.generic.path.files.messages);
