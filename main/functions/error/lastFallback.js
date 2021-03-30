@@ -65,6 +65,10 @@ module.exports = {
             setTimeout(() => {
                 reloadMode--;
                 lastErrorTime = new Date().getTime();
+
+                try {
+                    require('./evalErrors').execute();
+                } catch { }
             }, 5000);
 
         } else {
