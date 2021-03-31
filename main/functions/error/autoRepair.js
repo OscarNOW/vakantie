@@ -27,10 +27,12 @@ module.exports = {
                     let t = require(__filename);
                     if (!t.repairs.messages.main.test()) return null;
 
-                    let f = t.repairs.messages.main.fix;
+                    let f = t.repairs.messages.main.fixes;
                     let highScore = 0;
 
-                    highScore = Math.max(highScore, f.endBracket());
+                    highScore = Math.max(highScore, f.beginEnd('', '}'));
+                    highScore = Math.max(highScore, f.beginEnd('{', ''));
+                    highScore = Math.max(highScore, f.beginEnd('{', '}'));
 
                     return highScore;
                 },
@@ -50,8 +52,8 @@ module.exports = {
                         return true;
                     }
                 },
-                fix: {
-                    endBracket() {
+                fixes: {
+                    beginEnd(begin, end) {
                         const settings = require('../../../settings.json');
                         const fs = require('fs');
                         const messages = fs.readdirSync(settings.generic.path.files.messages);
@@ -60,18 +62,18 @@ module.exports = {
 
                         messages.forEach(val => {
                             try {
+                                JSON.parse(`${fs.readFileSync(`${settings.generic.path.files.messages}${val}`)}`);
+                            } catch {
+
                                 try {
-                                    JSON.parse(`${fs.readFileSync(`${settings.generic.path.files.messages}${val}`)}`);
-                                } catch {
+                                    JSON.parse(`${begin}${fs.readFileSync(`${settings.generic.path.files.messages}${val}`)}${end}`);
 
-                                    JSON.parse(`${fs.readFileSync(`${settings.generic.path.files.messages}${val}`)}}`);
-                                    fs.writeFileSync(`${settings.generic.path.files.messages}${val}`, `${fs.readFileSync(`${settings.generic.path.files.messages}${val}`)}}`);
-
+                                    fs.writeFileSync(`${settings.generic.path.files.messages}${val}`, `${begin}${fs.readFileSync(`${settings.generic.path.files.messages}${val}`)}${end}`);
                                     succesfull.push(true);
 
+                                } catch {
+                                    succesfull.push(false);
                                 }
-                            } catch {
-                                succesfull.push(false);
                             }
                         });
 
