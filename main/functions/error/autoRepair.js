@@ -1,9 +1,13 @@
 module.exports = {
-    execute() {
+    execute(server) {
         let t = require(__filename);
         let succesfull = [];
 
+        server.close();
+
         succesfull.push(t.repairs.messages.main.fix());
+
+        require('../../../api/test');
 
         if (succesfull.includes(0)) {
             if (succesfull.includes(1) || succesfull.includes(2)) {
@@ -91,6 +95,35 @@ module.exports = {
 
                     }
                 }
+            }
+        },
+        modules: {
+            node_modules() {
+                const settings = require('../../../settings.json');
+                const fs = require('fs');
+                let succesfull = [];
+
+                let modules = fs.readdirSync(settings.generic.path.files.modules);
+                modules.forEach(val => {
+                    let apiPath = settings.generic.path.files.moduleApi.replace('{modules}', settings.generic.path.files.modules).replace('{name}', val);
+                    if (fs.existsSync(apiPath)) {
+                        let apis = fs.readdirSync(apiPath);
+                        apis.forEach(api => {
+                            try {
+                                let apiFile = require(`../../.${settings.generic.path.files.moduleApi.replace('{modules}', settings.generic.path.files.modules).replace('{name}', val)}${api}`);
+                                if (apiFile.dependencies && apiFile.dependencies.node_modules) {
+                                    apiFile.dependencies.node_modules.forEach(val => {
+                                        try {
+                                            require.resolve(val);
+                                        } catch {
+
+                                        }
+                                    })
+                                }
+                            } catch { }
+                        })
+                    }
+                })
             }
         }
     }

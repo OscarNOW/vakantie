@@ -1,4 +1,9 @@
 module.exports = {
+	dependencies: {
+		node_modules: [
+			"sniffr"
+		]
+	},
 	execute(argument) {
 		const { end, request } = argument;
 
