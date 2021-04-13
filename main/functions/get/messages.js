@@ -9,13 +9,8 @@ if (isModuleInstalled('requestInfo')) {
 
 module.exports = {
     execute(argument) {
-        let files;
-        let request;
-
-        if (argument) {
-            if (argument.file) files = argument.files;
-            if (argument.request) files = argument.request;
-        }
+        let files = argument?.files;
+        let request = argument?.request;
 
         let options = [];
         if (!files)

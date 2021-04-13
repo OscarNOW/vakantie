@@ -2,7 +2,7 @@ const fs = require('fs');
 const settings = require('../../../settings.json');
 let gMessages;
 try {
-    gMessages = require(`../../.${settings.generic.path.files.messages}${settings.generic.lang}.json`);
+    gMessages = require(`../get/messages`).execute().mainFunction();
 } catch (err) {
     gMessages = undefined;
 }

@@ -124,6 +124,7 @@ module.exports = {
         modules: {
             async node_modules() {
                 let changed = [];
+                let logs = [];
                 try {
                     const settings = require('../../../settings.json');
                     const fs = require('fs');
@@ -148,6 +149,25 @@ module.exports = {
 
                     let modules = fs.readdirSync(settings.generic.path.files.modules);
                     modules.forEach(val => {
+
+                        let extraDependenciesPath = `${settings.generic.path.files.modules}${val}/${settings.generic.path.files.extraDependencies}`;
+                        console.log(extraDependenciesPath)
+                        if (fs.existsSync(extraDependenciesPath)) {
+                            try {
+                                let extraDependencies = require(extraDependenciesPath);
+
+                                if (extraDependencies?.node_modules)
+                                    extraDependencies.node_modules.forEach(val => {
+                                        installModule(val)
+                                    })
+                            } catch (err) {
+                                logs.push({
+                                    tag: 'error',
+                                    value: err
+                                })
+                            }
+                        }
+
                         let apiPath = settings.generic.path.files.moduleApi.replace('{modules}', settings.generic.path.files.modules).replace('{name}', val);
                         if (fs.existsSync(apiPath)) {
                             let apis = fs.readdirSync(apiPath);
@@ -159,7 +179,12 @@ module.exports = {
                                             installModule(val);
                                         })
                                     }
-                                } catch { }
+                                } catch (err) {
+                                    logs.push({
+                                        tag: 'error',
+                                        value: err
+                                    })
+                                }
                             })
                         }
                     })
@@ -168,7 +193,8 @@ module.exports = {
                         await require(`../installNodeModule`).execute(installmodules)
 
                     return {
-                        changed
+                        changed,
+                        logs
                     }
                 } catch (err) {
                     return {

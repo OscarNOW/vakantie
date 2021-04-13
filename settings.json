@@ -16,7 +16,8 @@
                 "reloadingFile": "{files}/error/reloading/index.html",
                 "modules": "./modules/",
                 "moduleApi": "{modules}{name}/api/",
-                "noError": ".noError"
+                "noError": ".noError",
+                "extraDependencies": "extraDependencies.json"
             },
             "online": {
                 "api": "/api/"
