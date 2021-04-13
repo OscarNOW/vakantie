@@ -6,6 +6,8 @@ const server = http.createServer(() => {
 
 server.listen(8080);
 
-debugger;
+(async function () {
+    console.log(await require('../main/functions/error/autoRepair').execute(server));
 
-console.log(require('../main/functions/error/autoRepair').execute(server));
+    while (true) { }
+})()

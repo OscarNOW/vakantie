@@ -10,7 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "js-sha256": "^0.9.0",
-    "mime-types": "^2.1.29",
+    "mime-types": "^2.1.30",
+    "npm": "^7.9.0",
     "sniffr": "^1.2.0"
   }
 }

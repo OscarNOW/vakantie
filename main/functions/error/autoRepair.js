@@ -1,5 +1,16 @@
+const repairSettings = {
+    jsonBeginEnd: [
+        ['', '}'],
+        ['{', ''],
+        ['{', '}']
+    ],
+    projectDependencies: [
+        'mime-types'
+    ]
+}
+
 module.exports = {
-    execute(server) {
+    async execute(server) {
         let t = require(__filename);
 
         let changed = [];
@@ -8,9 +19,13 @@ module.exports = {
 
         server.close();
 
-        currentReturn = t.repairs.messages.main.fix();
-        changed = changed.concat(currentReturn.changed)
-        logs = logs.concat(currentReturn.logs)
+        currentReturn = await t.repairs.messages.main.fix();
+        changed = changed.concat(currentReturn?.changed || [])
+        logs = logs.concat(currentReturn?.logs || [])
+
+        currentReturn = await t.repairs.modules.node_modules();
+        changed = changed.concat(currentReturn?.changed || [])
+        logs = logs.concat(currentReturn?.logs || [])
 
         return {
             changed,
@@ -23,7 +38,7 @@ module.exports = {
             main: {
                 fix() {
                     let t = require(__filename);
-                    if (!t.repairs.messages.main.test()) return null;
+                    if (!t.repairs.messages.main.test()) return;
 
                     let f = t.repairs.messages.main.fixes;
 
@@ -107,13 +122,29 @@ module.exports = {
             }
         },
         modules: {
-            node_modules() {
+            async node_modules() {
                 let changed = [];
                 try {
                     const settings = require('../../../settings.json');
                     const fs = require('fs');
 
                     let installmodules = [];
+
+                    function installModule(name) {
+                        try {
+                            require.resolve(name)
+                        } catch {
+                            installmodules.push(name);
+                            changed.push({
+                                tag: 'installedNodeModule',
+                                value: name
+                            });
+                        }
+                    }
+
+                    repairSettings.projectDependencies.forEach(val => {
+                        installModule(val);
+                    })
 
                     let modules = fs.readdirSync(settings.generic.path.files.modules);
                     modules.forEach(val => {
@@ -125,15 +156,7 @@ module.exports = {
                                     let apiFile = require(`../../.${settings.generic.path.files.moduleApi.replace('{modules}', settings.generic.path.files.modules).replace('{name}', val)}${api}`);
                                     if (apiFile.dependencies?.node_modules) {
                                         apiFile.dependencies.node_modules.forEach(val => {
-                                            try {
-                                                require.resolve(val);
-                                            } catch {
-                                                installmodules.push(val);
-                                                changed.push({
-                                                    tag: 'installedNodeModule',
-                                                    value: val
-                                                });
-                                            }
+                                            installModule(val);
                                         })
                                     }
                                 } catch { }
@@ -141,7 +164,12 @@ module.exports = {
                         }
                     })
 
-                    require(`../installNodeModule`).execute(installmodules)
+                    if (installmodules)
+                        await require(`../installNodeModule`).execute(installmodules)
+
+                    return {
+                        changed
+                    }
                 } catch (err) {
                     return {
                         changed,
