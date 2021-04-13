@@ -1,26 +1,20 @@
 module.exports = {
     execute(server) {
         let t = require(__filename);
-        let succesfull = [];
+
+        let changed = [];
+        let logs = [];
+        let currentReturn;
 
         server.close();
 
-        succesfull.push(t.repairs.messages.main.fix());
+        currentReturn = t.repairs.messages.main.fix();
+        changed = changed.concat(currentReturn.changed)
+        logs = logs.concat(currentReturn.logs)
 
-        require('../../../api/test');
-
-        if (succesfull.includes(0)) {
-            if (succesfull.includes(1) || succesfull.includes(2)) {
-                return 1;
-            } else {
-                return 0;
-            }
-        } else {
-            if (succesfull.includes(1)) {
-                return 1;
-            } else {
-                return 2;
-            }
+        return {
+            changed,
+            logs
         }
 
     },
@@ -32,13 +26,27 @@ module.exports = {
                     if (!t.repairs.messages.main.test()) return null;
 
                     let f = t.repairs.messages.main.fixes;
-                    let highScore = 0;
 
-                    highScore = Math.max(highScore, f.beginEnd('', '}'));
-                    highScore = Math.max(highScore, f.beginEnd('{', ''));
-                    highScore = Math.max(highScore, f.beginEnd('{', '}'));
+                    let changed = [];
+                    let logs = [];
+                    let currentReturn;
 
-                    return highScore;
+                    currentReturn = f.beginEnd('', '}');
+                    changed = changed.concat(currentReturn.changed)
+                    logs = logs.concat(currentReturn.logs)
+
+                    currentReturn = f.beginEnd('{', '');
+                    changed = changed.concat(currentReturn.changed)
+                    logs = logs.concat(currentReturn.logs)
+
+                    currentReturn = f.beginEnd('{', '}');
+                    changed = changed.concat(currentReturn.changed)
+                    logs = logs.concat(currentReturn.logs)
+
+                    return {
+                        changed,
+                        logs
+                    };
                 },
                 test() {
                     const settings = require('../../../settings.json');
@@ -62,7 +70,8 @@ module.exports = {
                         const fs = require('fs');
                         const messages = fs.readdirSync(settings.generic.path.files.messages);
 
-                        let succesfull = [];
+                        let changed = [];
+                        let logs = [];
 
                         messages.forEach(val => {
                             try {
@@ -73,24 +82,24 @@ module.exports = {
                                     JSON.parse(`${begin}${fs.readFileSync(`${settings.generic.path.files.messages}${val}`)}${end}`);
 
                                     fs.writeFileSync(`${settings.generic.path.files.messages}${val}`, `${begin}${fs.readFileSync(`${settings.generic.path.files.messages}${val}`)}${end}`);
-                                    succesfull.push(true);
+                                    changed.push({
+                                        tag: 'changedJson',
+                                        begin,
+                                        end
+                                    })
 
                                 } catch {
-                                    succesfull.push(false);
+                                    logs.push({
+                                        tag: 'error',
+                                        value: err
+                                    })
                                 }
                             }
                         });
 
-                        if (succesfull.length == 0) return 0;
-
-                        if (succesfull.includes(true)) {
-                            if (succesfull.includes(false)) {
-                                return 1;
-                            } else {
-                                return 2;
-                            }
-                        } else {
-                            return 0;
+                        return {
+                            changed,
+                            logs
                         }
 
                     }
@@ -99,31 +108,49 @@ module.exports = {
         },
         modules: {
             node_modules() {
-                const settings = require('../../../settings.json');
-                const fs = require('fs');
-                let succesfull = [];
+                let changed = [];
+                try {
+                    const settings = require('../../../settings.json');
+                    const fs = require('fs');
 
-                let modules = fs.readdirSync(settings.generic.path.files.modules);
-                modules.forEach(val => {
-                    let apiPath = settings.generic.path.files.moduleApi.replace('{modules}', settings.generic.path.files.modules).replace('{name}', val);
-                    if (fs.existsSync(apiPath)) {
-                        let apis = fs.readdirSync(apiPath);
-                        apis.forEach(api => {
-                            try {
-                                let apiFile = require(`../../.${settings.generic.path.files.moduleApi.replace('{modules}', settings.generic.path.files.modules).replace('{name}', val)}${api}`);
-                                if (apiFile.dependencies && apiFile.dependencies.node_modules) {
-                                    apiFile.dependencies.node_modules.forEach(val => {
-                                        try {
-                                            require.resolve(val);
-                                        } catch {
+                    let installmodules = [];
 
-                                        }
-                                    })
-                                }
-                            } catch { }
-                        })
+                    let modules = fs.readdirSync(settings.generic.path.files.modules);
+                    modules.forEach(val => {
+                        let apiPath = settings.generic.path.files.moduleApi.replace('{modules}', settings.generic.path.files.modules).replace('{name}', val);
+                        if (fs.existsSync(apiPath)) {
+                            let apis = fs.readdirSync(apiPath);
+                            apis.forEach(api => {
+                                try {
+                                    let apiFile = require(`../../.${settings.generic.path.files.moduleApi.replace('{modules}', settings.generic.path.files.modules).replace('{name}', val)}${api}`);
+                                    if (apiFile.dependencies?.node_modules) {
+                                        apiFile.dependencies.node_modules.forEach(val => {
+                                            try {
+                                                require.resolve(val);
+                                            } catch {
+                                                installmodules.push(val);
+                                                changed.push({
+                                                    tag: 'installedNodeModule',
+                                                    value: val
+                                                });
+                                            }
+                                        })
+                                    }
+                                } catch { }
+                            })
+                        }
+                    })
+
+                    require(`../installNodeModule`).execute(installmodules)
+                } catch (err) {
+                    return {
+                        changed,
+                        logs: [{
+                            tag: 'error',
+                            value: err
+                        }]
                     }
-                })
+                }
             }
         }
     }
