@@ -1,6 +1,7 @@
 const fs = require('fs');
 const mime = require('mime-types');
 const statusCode = require('../functions/error/statusCode.js').execute;
+const checkAcceptHeader = require('../functions/parse/header/accept');
 
 module.exports = {
     execute(request, response) {
@@ -15,10 +16,10 @@ module.exports = {
                 return response.end(data);
             });
         else
-            if (path.includes('.html'))
+            if (checkAcceptHeader(request.headers.accept, 'text/html').isIn)
                 statusCode(response, 404);
             else {
-                response.writeHead(400)
+                response.writeHead(404)
                 return response.end();
             }
     }
