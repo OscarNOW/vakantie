@@ -7,20 +7,19 @@ module.exports = {
 
         let path = require('../functions/parse/normal').execute(request.url.toLowerCase());
 
-        if (fs.existsSync(path)) {
-            fs.readFile(path, async function (err, data) {
+        if (fs.existsSync(path))
+            fs.readFile(path, async (err, data) => {
                 if (err) throw err;
 
                 response.writeHead(200, { 'Content-Type': mime.lookup(path) });
                 return response.end(data);
             });
-        } else {
-            if (path.includes('.html')) {
+        else
+            if (path.includes('.html'))
                 statusCode(response, 404);
-            } else {
+            else {
                 response.writeHead(400)
                 return response.end();
             }
-        }
     }
 }

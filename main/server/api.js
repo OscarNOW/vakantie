@@ -68,17 +68,14 @@ module.exports = {
                         response
                     });
                 }
-            } else {
+            } else
                 if (isModuleInstalled('text')) {
                     let list = require(`../../${settings.generic.path.files.modules}text/createList.js`).createList(api[path].enabled.dependencies.dependenciesNotInstalled);
                     return parseError(new Error(messages.error.moduleNotInstalledForShort.replace('{api}', path)), messages.error.modulesNotInstalledFor.replace('{api}', path).replace('{dependencie}', list));
-                } else {
+                } else
                     return parseError(new Error(messages.error.moduleNotInstalledForShort.replace('{api}', path)), messages.error.moduleNotInstalledFor.replace('{api}', path).replace('{dependencie}', api[path].enabled.dependencies.dependenciesNotInstalled[0]));
-                }
-            }
-        } else {
+        } else
             return statusCode(response, 404, { text: messages.error.apiCallNotFound });
-        }
 
         return;
     }
