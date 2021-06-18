@@ -12,7 +12,7 @@
         "thereAreErrors": "Er zijn {amount} errors!",
         "thereIsError": "Er is {amount} error!",
         "reload": "herladen",
-        "clientServerReload": "Wachten op server"
+        "clientServerReload": "Vanwege een error, is de server aan het opnieuw opstarten"
     },
     "httpStatusCodes": {
         "400": {

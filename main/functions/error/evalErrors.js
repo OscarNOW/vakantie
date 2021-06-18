@@ -35,8 +35,11 @@ module.exports = {
                     if (isModuleInstalled('text')) {
                         let rows = [];
                         files.forEach((val) => {
-                            let occurrences = require(`../../../${settings.generic.path.files.errors}${val}`).occurrences.length;
-                            rows.push([`${settings.generic.path.files.errors}${val}`, occurrences]);
+                            if (val.endsWith('.json')) {
+                                let occurrences = require(`../../../${settings.generic.path.files.errors}${val}`).occurrences.length;
+                                rows.push([`${settings.generic.path.files.errors}${val}`, occurrences]);
+                            } else
+                                rows.push([`${settings.generic.path.files.errors}${val}`, -1])
                         });
 
                         let createDiagram = require(`../../../${settings.generic.path.files.modules}text/createDiagram.js`);

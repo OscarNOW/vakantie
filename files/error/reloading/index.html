@@ -14,7 +14,9 @@
     <div id="outer">
         <div>
             <div class="textWrapper">
-                <p>|reloadText|</p>
+                <center>
+                    <p id="reloadText">|reloadText|</p>
+                </center>
             </div>
             <div id="bar">
                 <div id="gBar"></div>
@@ -24,6 +26,11 @@
 
     <script>
         async function onload() {
+            let reloadText = document.getElementById('reloadText');
+            if (reloadText.innerText == '' || reloadText.innerText == '|reloadText|') {
+                reloadText.innerText = 'The server is currently having serious trouble.\nThe page automatically reloads if the loading bar is full.'
+            }
+
             let bar = document.getElementById('bar');
 
             await asyncTimeout(100);

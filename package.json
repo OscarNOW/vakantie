@@ -9,7 +9,7 @@
   "author": "Oscar",
   "license": "ISC",
   "dependencies": {
-    "mime-types": "^2.1.30",
+    "mime-types": "^2.1.31",
     "npm": "^7.9.0",
     "sniffr": "^1.2.0"
   }

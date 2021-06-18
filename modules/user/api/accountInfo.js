@@ -1,7 +1,7 @@
 const fs = require('fs');
 const settings = require('../settings.json');
 const mSettings = require('../../../settings.json');
-const pMessages = require(`../${settings.path.files.messages}${mSettings.generic.lang}.json`);
+const pMessages = require(`../../../main/functions/get/messages`).execute().mainFunction();
 let userdatabase = require(`../${settings.path.files.userdatabase}`);
 
 module.exports = {

@@ -1,7 +1,7 @@
 const fs = require('fs');
 const settings = require('../../settings.json');
 const mSettings = require('../../../../settings.json');
-const messages = require(`../../${settings.path.files.messages}${mSettings.generic.lang}.json`);
+const messages = require(`../../../../main/functions/get/messages`).execute().mainFunction();
 const mMessages = require(`../../../../${mSettings.generic.path.files.messages}${mSettings.generic.lang}.json`);
 let userdatabase = require(`../../${settings.path.files.userdatabase}`);
 
