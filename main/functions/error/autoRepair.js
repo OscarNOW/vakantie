@@ -103,7 +103,7 @@ module.exports = {
                                         end
                                     })
 
-                                } catch {
+                                } catch (err) {
                                     logs.push({
                                         tag: 'error',
                                         value: err
@@ -131,7 +131,7 @@ module.exports = {
 
                     let installmodules = [];
 
-                    function installModule(name) {
+                    let installModule = name => {
                         try {
                             require.resolve(name)
                         } catch {

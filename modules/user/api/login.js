@@ -54,20 +54,22 @@ module.exports = {
 			return end(JSON.stringify({ code: 200, loginToken }));
 		} else {
 			//Maak nieuwe loginToken
-			if (!params[settings.path.online.deviceCookie]) newDeviceCookie =
-				settings.letters.deviceCookie											//Letter for device cookie
-				+
-				require('../../random/random.js').execute(
-					10,
-					require('../../random/getChars.js').execute(
-						{
-							letters: true,
-							confusingLetters: false,
-							numbers: true,
-							confusingNumbers: false
-						}
-					)
-				);
+			if (!params[settings.path.online.deviceCookie]) {
+				let newDeviceCookie =
+					settings.letters.deviceCookie											//Letter for device cookie
+					+
+					require('../../random/random.js').execute(
+						10,
+						require('../../random/getChars.js').execute(
+							{
+								letters: true,
+								confusingLetters: false,
+								numbers: true,
+								confusingNumbers: false
+							}
+						)
+					);
+			}
 
 
 			let newToken =

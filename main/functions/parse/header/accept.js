@@ -8,21 +8,21 @@ module.exports = (acceptHeader, check) => {
         if (isAll) return;
         if (val.split(';')[0] == '*/*') {
             isAll = true;
-            (val.split(';').length > 1) &&
-                (allQal = val.split(';')[1].split('q=')[1])
+            if (val.split(';').length > 1)
+                allQal = val.split(';')[1].split('q=')[1];
         }
 
         newArr.push({
             type: val.split(';')[0],
             quality:
-                (val.split(';').length > 1) ?
+                val.split(';').length > 1 ?
                     val.split(';')[1].split('q=')[1] :
                     1
-        })
-    })
+        });
+    });
 
     if (isAll)
-        return { isIn: true, quality: allQal }
+        return { isIn: true, quality: allQal };
 
     let found = false;
     let quality;

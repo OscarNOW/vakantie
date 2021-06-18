@@ -69,7 +69,7 @@ function findCorrectValue(between, object, string) {
 	let words = string.split(between);
 	let newObject = object[words[0]];
 	if (!newObject) return null;
-	if (!(typeof newObject == 'object')) return newObject;
+	if (typeof newObject != 'object') return newObject;
 	if (words.length == 1) return newObject;
 	return findCorrectValue(between, newObject, words.splice(1).join(between));
 }

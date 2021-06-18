@@ -12,11 +12,10 @@ try {
 	//Evaluate errors
 	require('./main/functions/error/evalErrors').execute();
 
-} catch { }
+} catch (e) { }
 
 
 server.listen(						//Listen to server
-	process.env.PORT				//If hosted on heroku
-	||
+	process.env.PORT ||				//If hosted on heroku
 	settings.generic.port			//Else
 );

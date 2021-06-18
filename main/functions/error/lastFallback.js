@@ -36,7 +36,7 @@ module.exports = {
         let retry = true;
 
         let currentErr = `${err}`.split('\n')[0];
-        if ((currentErr == lastError) && (timeDiff < 1000)) {
+        if (currentErr == lastError && timeDiff < 1000) {
             amountError += 1;
         } else {
             lastError = currentErr;
@@ -50,7 +50,7 @@ module.exports = {
 
         fs.writeFileSync(`${settings.generic.path.files.errors}RAW1-${amountError}-${Math.floor(Math.random() * 1000)}.txt`, data);
 
-        if ((amountError > 5) && (timeDiff < 1000)) retry = false;
+        if (amountError > 5 && timeDiff < 1000) retry = false;
         cConsole.clear();
 
         if (retry) {
@@ -111,7 +111,7 @@ module.exports = {
             try {
                 require('../../server/main').execute(a1, a2);
             } catch (err) {
-                err.stack;
+                (a => { })(err.stack)
                 let t = require(__filename);
                 t.execute(err, a2);
             }

@@ -1,7 +1,9 @@
 const fs = require('fs');
-const readdirSync = fs.readdirSync;
-const existsSync = fs.existsSync;
-const lstatSync = fs.lstatSync;
+const { readdirSync, existsSync, lstatSync } = fs;
+const isModuleInstalled = require('../../functions/installNodeModule').execute;
+const parseErrorRaw = require('../../functions/error/parseErrorRaw').execute;
+const evalErrors = require('../../functions/error/evalErrors').execute;
+const messages = require('../../functions/get/messages').execute().mainFunction()
 
 const generic = require('../../../settings.json').generic;
 let api = {};

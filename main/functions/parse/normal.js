@@ -31,10 +31,9 @@ module.exports = {
 
         if (
             !path
-                .split('/')
-            [path
-                .split('/')
-                .length - 1
+                .split('/')[path
+                    .split('/')
+                    .length - 1
             ]
                 .includes('.')
         ) {
@@ -54,9 +53,7 @@ module.exports = {
                     .join('/');
 
             if (!newPath
-                .split('/')
-            [
-                newPath
+                .split('/')[newPath
                     .split('/')
                     .length - 1
             ]

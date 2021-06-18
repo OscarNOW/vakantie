@@ -19,8 +19,8 @@ module.exports = {
             if (checkAcceptHeader(request.headers.accept, 'text/html').isIn)
                 statusCode(response, 404);
             else {
-                response.writeHead(404)
+                response.writeHead(404);
                 return response.end();
             }
     }
-}
+};
