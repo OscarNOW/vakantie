@@ -26,28 +26,8 @@
 
 <script defer>
     let iframe = document.querySelector('iframe');
-    // let loc = iframe.contentDocument.location.href.split('$org')[0]
 
-    // function onChange(newUrl) {
-    //     if (newUrl == loc)
-    //         return;
-    //     if (newUrl.endsWith('$org'))
-    //         return;
-
-    //     iframe.remove()
-
-    //     console.log({ old: loc })
-    //     loc = newUrl + '$org'
-    //     console.log({ new: loc })
-    //     let newIframe = document.createElement('iframe')
-    //     newIframe.src = loc;
-    //     newIframe.onload = "onChange(this.contentWindow.location.href)"
-
-    //     document.querySelector('body').appendChild(newIframe)
-    //     iframe = newIframe
-    // }
-
-    function iframeURLChange(iframe, callback) {
+    function iframeURLChange(iframe) {
         var unloadHandler = function () {
             // Timeout needed because the URL changes immediately after
             // the `unload` event is dispatched.
@@ -63,7 +43,6 @@
                 setTimeout(() => {
                     console.log({ new: iframe.contentWindow.location.href })
                 }, 50)
-                // callback(iframe.contentWindow.location.href);
             }, 0);
         };
 
@@ -78,9 +57,7 @@
         attachUnload();
     }
 
-    iframeURLChange(iframe, function (newURL) {
-        console.log("URL changed:", newURL);
-    });
+    iframeURLChange(iframe);
 </script>
 
 </html>
