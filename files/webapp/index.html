@@ -9,7 +9,8 @@
 </head>
 
 <body>
-    <iframe src="|url|$org"></iframe>
+    <iframe src="|url|$org" id="iframe1"></iframe>
+    <iframe src="about:blank" id="iframe2" style="display: none"></iframe>
 </body>
 
 <style>
@@ -22,10 +23,19 @@
         border: none;
         transition: left 0.5s ease 0s;
     }
+
+    .coverDiv {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0);
+    }
 </style>
 
 <script defer>
-    let iframe = document.querySelector('iframe');
+    let iframe = document.querySelector('iframe#iframe1');
     let oldLoc = iframe.src;
 
     function wait(ms) {
@@ -36,6 +46,8 @@
 
     function iframeURLChange(iframe) {
         var unloadHandler = function () {
+            let body = iframe.contentWindow.document.body.innerHTML;
+            let head = iframe.contentWindow.document.head.innerHTML;
             setTimeout(async () => {
                 let loc = iframe.contentWindow.location.href;
                 if (!loc.endsWith('$org'))
@@ -46,11 +58,26 @@
                     return
                 }
 
-                // window.frames[0].stop();
-                iframe.contentWindow.location.replace(oldLoc)
+                let coverDiv = document.createElement('div')
+                coverDiv.classList.add('coverDiv')
+                document.body.appendChild(coverDiv)
 
-                await wait(500)
+                await wait(100)
 
+                let oldIframe = document.getElementById('iframe2')
+
+                oldIframe.contentWindow.document.body.innerHTML =
+                    body
+                oldIframe.contentWindow.document.head.innerHTML =
+                    head
+
+                oldIframe.style.zIndex = 100
+                // oldIframe.style.backgroundColor = 'white'
+                oldIframe.style.display = null
+
+                await wait(400)
+
+                iframe.style.display = 'none';
                 oldLoc = loc
                 console.log(`Switching to ${loc}`)
 
@@ -62,21 +89,28 @@
                 await wait(100)
 
                 newIframe.style.left = 0;
-                iframe.style.left = '-110vw'
+                oldIframe.style.left = '-110vw'
+                iframe.contentWindow.location.replace(loc)
 
                 await wait(600)
 
-                iframe.contentWindow.location.replace(loc)
                 iframe.style.transition = 'none';
+                oldIframe.style.display = 'none'
+                oldIframe.contentWindow.location.replace('about:blank')
+                oldIframe.style.left = null
+                oldIframe.style.zIndex = null
+
+                // await wait(100)
+
+                iframe.style.display = null;
 
                 await wait(100)
 
-                iframe.style.left = null;
                 newIframe.remove()
 
-                await wait(100)
+                await wait(500)
 
-                iframe.style.transition = null
+                coverDiv.remove()
             }, 0);
         };
 
