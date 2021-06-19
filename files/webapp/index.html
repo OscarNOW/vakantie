@@ -58,6 +58,8 @@
                     return
                 }
 
+                window.history.pushState(loc.split('$org')[0], loc.split('$org')[0], loc.split('$org')[0]);
+
                 let coverDiv = document.createElement('div')
                 coverDiv.classList.add('coverDiv')
                 document.body.appendChild(coverDiv)
