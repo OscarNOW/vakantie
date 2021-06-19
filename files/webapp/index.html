@@ -9,7 +9,78 @@
 </head>
 
 <body>
-    Ik laat je dit in plaats zien.
+    <iframe src="|url|$org"></iframe>
+    <!-- onload="onChange(this.contentWindow.location.href)" -->
 </body>
+
+<style>
+    iframe {
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        border: none;
+    }
+</style>
+
+<script defer>
+    let iframe = document.querySelector('iframe');
+    // let loc = iframe.contentDocument.location.href.split('$org')[0]
+
+    // function onChange(newUrl) {
+    //     if (newUrl == loc)
+    //         return;
+    //     if (newUrl.endsWith('$org'))
+    //         return;
+
+    //     iframe.remove()
+
+    //     console.log({ old: loc })
+    //     loc = newUrl + '$org'
+    //     console.log({ new: loc })
+    //     let newIframe = document.createElement('iframe')
+    //     newIframe.src = loc;
+    //     newIframe.onload = "onChange(this.contentWindow.location.href)"
+
+    //     document.querySelector('body').appendChild(newIframe)
+    //     iframe = newIframe
+    // }
+
+    function iframeURLChange(iframe, callback) {
+        var unloadHandler = function () {
+            // Timeout needed because the URL changes immediately after
+            // the `unload` event is dispatched.
+            setTimeout(function () {
+                let oldLoc = iframe.contentWindow.location.href;
+                let newLoc = oldLoc;
+                console.log({ old: iframe.contentWindow.location.href })
+                if (!iframe.contentWindow.location.href.endsWith('$org')) {
+                    iframe.contentWindow.location.replace(iframe.contentWindow.location.href + '$org')
+                    newLoc = iframe.contentWindow.location.href + '$org'
+                }
+
+                setTimeout(() => {
+                    console.log({ new: iframe.contentWindow.location.href })
+                }, 50)
+                // callback(iframe.contentWindow.location.href);
+            }, 0);
+        };
+
+        function attachUnload() {
+            // Remove the unloadHandler in case it was already attached.
+            // Otherwise, the change will be dispatched twice.
+            iframe.contentWindow.removeEventListener("unload", unloadHandler);
+            iframe.contentWindow.addEventListener("unload", unloadHandler);
+        }
+
+        iframe.addEventListener("load", attachUnload);
+        attachUnload();
+    }
+
+    iframeURLChange(iframe, function (newURL) {
+        console.log("URL changed:", newURL);
+    });
+</script>
 
 </html>

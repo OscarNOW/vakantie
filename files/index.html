@@ -11,8 +11,14 @@
 <body>
     Hoi
     <p>
-        <a href="/2">Ga naar pagina 2</a>
+        Ga naar pagina 2
     </p>
 </body>
+
+<script defer>
+    document.querySelector('p').onclick = () => {
+        window.location.replace('/2')
+    }
+</script>
 
 </html>

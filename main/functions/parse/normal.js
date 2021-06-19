@@ -5,6 +5,9 @@ module.exports = {
     execute(p) {
         let path = p;
 
+        if (path.includes('$'))
+            path = path.split('$')[0]
+
         if (path.includes('?')) //Als params
             path = path.split('?')[0] //Verwijder params van path
 
