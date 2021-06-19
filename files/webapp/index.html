@@ -86,14 +86,14 @@
                 console.log(`Switching to ${loc}`)
 
                 let newIframe = document.createElement('iframe')
-                newIframe.style.left = '110vw'
+                newIframe.style.left = '100vw'
                 newIframe.src = loc;
                 document.body.appendChild(newIframe)
 
                 await wait(100)
 
                 newIframe.style.left = 0;
-                oldIframe.style.left = '-110vw'
+                oldIframe.style.left = '-100vw'
                 iframe.contentWindow.location.replace(loc)
 
                 await wait(600)
