@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hoi</title>
+    <title>Loading</title>
 </head>
 
 <body>
-    <iframe src="|url|$org" id="iframe1" onload="changeTitle()"></iframe>
+    <iframe src="|url|$org" id="iframe1"></iframe>
     <iframe src="about:blank" id="iframe2" style="display: none"></iframe>
 </body>
 
@@ -40,6 +40,7 @@
 </style>
 
 <script defer>
+    let isFirstLoad = true;
     let iframe = document.querySelector('iframe#iframe1');
     let oldLoc = iframe.src;
 
@@ -52,6 +53,20 @@
     function changeTitle() {
         document.title = iframe.contentDocument.title;
     }
+
+    ; (async () => {
+        await wait(50)
+
+        if (!isFirstLoad)
+            return;
+        isFirstLoad = true;
+
+        changeTitle()
+        oldIframe.contentWindow.document.body.innerHTML =
+            iframe.contentWindow.document.body.innerHTML
+        oldIframe.contentWindow.document.head.innerHTML =
+            iframe.contentWindow.document.head.innerHTML
+    })()
 
     function wait(ms) {
         return new Promise(res => {
@@ -77,10 +92,10 @@
                     return
                 }
 
-                if(oldIframe.contentWindow.document.body.innerHTML != body)
+                if (oldIframe.contentWindow.document.body.innerHTML != body)
                     oldIframe.contentWindow.document.body.innerHTML =
                         body
-                if(oldIframe.contentWindow.document.head.innerHTML != head)
+                if (oldIframe.contentWindow.document.head.innerHTML != head)
                     oldIframe.contentWindow.document.head.innerHTML =
                         head
 
@@ -109,7 +124,13 @@
                 oldIframe.style.left = '-100vw'
                 iframe.contentWindow.location.replace(loc)
 
-                await wait(600)
+                await wait(250)
+
+                changeTitle()
+                if (window.location != loc.split('$org')[0])
+                    window.history.pushState(loc.split('$org')[0], loc.split('$org')[0], loc.split('$org')[0]);
+
+                await wait(350)
 
                 iframe.style.transition = 'none';
                 oldIframe.style.display = 'none'
@@ -124,9 +145,6 @@
                 await wait(100)
 
                 newIframe.remove()
-
-                if(window.location != loc.split('$org')[0])
-                    window.history.pushState(loc.split('$org')[0], loc.split('$org')[0], loc.split('$org')[0]);
 
                 await wait(100)
 
@@ -151,7 +169,7 @@
 
     iframeURLChange(iframe);
 
-    window.onpopstate = function(e){
+    window.onpopstate = function (e) {
         console.log(e.state)
         iframe.contentWindow.location.replace(e.state)
     };
