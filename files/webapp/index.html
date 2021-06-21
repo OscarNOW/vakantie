@@ -125,13 +125,13 @@
                 oldIframe.style.left = '-100vw'
                 iframe.contentWindow.location.replace(loc)
 
-                await wait(250)
+                await wait(200)
 
                 changeTitle()
                 if (window.location != loc.split('$org')[0])
                     window.history.pushState(loc.split('$org')[0], loc.split('$org')[0], loc.split('$org')[0]);
 
-                await wait(350)
+                await wait(400)
 
                 iframe.style.transition = 'none';
                 oldIframe.style.display = 'none'
