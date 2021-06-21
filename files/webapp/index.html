@@ -31,6 +31,9 @@
         width: 100vw;
         height: 100vh;
         background-color: rgba(0, 0, 0, 0);
+
+        user-select: all;
+        cursor: default;
     }
 
     #iframe2 {
@@ -105,9 +108,6 @@
                 coverDiv.classList.add('coverDiv')
                 document.body.appendChild(coverDiv)
 
-                // await wait(400)
-                // await wait(400)
-
                 iframe.style.display = 'none';
                 oldLoc = loc
                 console.log(`Switching to ${loc}`)
@@ -118,7 +118,6 @@
                 newIframe.id = 'iframe3'
                 document.body.appendChild(newIframe)
 
-                // await wait(100)
                 await wait(100)
 
                 newIframe.style.left = 0;
@@ -138,9 +137,6 @@
                 oldIframe.contentWindow.location.replace('about:blank')
                 oldIframe.style.left = null
                 oldIframe.style.zIndex = null
-
-                // await wait(100)
-
                 iframe.style.display = null;
 
                 await wait(100)
