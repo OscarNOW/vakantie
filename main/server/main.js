@@ -10,10 +10,7 @@ module.exports = {
             if (request.url.toLowerCase().startsWith(settings.generic.path.online.api))
                 return require('../server/api.js').execute(request, response);
             else
-                if (request.url.toLowerCase().includes('$org'))
-                    return require('./normal.js').execute(request, response);
-                else
-                    return require('./webapp.js').execute(request, response);
+                return require('./normal.js').execute(request, response);
 
         } catch (err) {
             parseError(err);

@@ -1,6 +1,6 @@
 const fs = require('fs');
 const { readdirSync, existsSync, lstatSync } = fs;
-const isModuleInstalled = require('../../functions/installNodeModule').execute;
+const isModuleInstalled = require('../../functions/isModuleInstalled').execute;
 const parseErrorRaw = require('../../functions/error/parseErrorRaw').execute;
 const evalErrors = require('../../functions/error/evalErrors').execute;
 const messages = require('../../functions/get/messages').execute().mainFunction()
