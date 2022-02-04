@@ -1,0 +1,94 @@
+body {
+    margin: 0;
+}
+
+p {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+a {
+    color: rgb(25, 118, 194);
+    font-family: 'Roboto', sans-serif;
+    text-decoration: none;
+}
+
+.websiteName {
+    width: 100vw;
+    height: 9vh;
+
+    background-color: rgb(19, 126, 99);
+
+    display: flex;
+    justify-content: flex-start;
+}
+
+.websiteName > p {
+    font-size: 4vmax;
+}
+
+.logo {
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url(./pictures/logo.png);
+
+    width: 5vmax;
+    height: 5vmax;
+
+    margin-right: 2vw;
+    margin-left: 2vw;
+}
+
+.menuBar {
+    width: 100vw;
+    height: 10vh;
+
+    background-color: rgb(26, 174, 138);
+
+    display: flex;
+    justify-content: flex-start;
+
+}
+
+.menuBar > div {
+    height: 100%;
+
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+.menuBar > div > a {
+    margin-right: 7vw;
+
+    font-size: 3vmax;
+}
+
+.background {
+    width: 100%;
+    height: 40vh;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url(./pictures/achtergrond.jpg);
+}
+
+.information {
+    width: 100vw;
+    height: fit-content;
+
+    display: flex;
+    justify-content: space-around;
+}
+
+.left {
+    width: 50vw;
+    height: fit-content;
+}
+
+.right {
+    width: 50vw;
+    height: fit-content;
+}
