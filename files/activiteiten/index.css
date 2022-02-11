@@ -1,0 +1,152 @@
+body {
+    margin: 0;
+    overflow-x: hidden;
+}
+
+p {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+a {
+    color: rgb(25, 118, 194);
+    font-family: 'Roboto', sans-serif;
+    text-decoration: none;
+}
+
+.websiteName {
+    width: 100vw;
+    height: 9vh;
+
+    background-color: rgb(19, 126, 99);
+
+    display: flex;
+    justify-content: flex-start;
+}
+
+.websiteName > p {
+    font-size: 4vmax;
+}
+
+.logo {
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url(./pictures/logo.png);
+
+    width: 5vmax;
+    height: 5vmax;
+
+    margin-right: 2vw;
+    margin-left: 2vw;
+}
+
+.menuBar {
+    width: 100vw;
+    height: 10vh;
+
+    background-color: rgb(26, 174, 138);
+
+    display: flex;
+    justify-content: flex-start;
+
+    position: sticky;
+    top: 0;
+}
+
+.menuBar > div {
+    height: 100%;
+
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+.menuBar > div > a {
+    margin-right: 7vw;
+
+    font-size: 3vmax;
+}
+
+.information {
+    width: 90vw;
+    height: fit-content;
+
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    
+    margin-bottom: 11vh;
+    margin-top: 3vh;
+
+    padding-left: 5vw;
+    padding-right: 5vw;
+}
+
+.information > div > div {
+    display: flex;
+    justify-content: space-around;
+}
+
+.information > div > div > p {
+    width: 60vw;
+
+    margin-right: 5vw;
+}
+
+.information > div > div > div {
+    width: 20vmax;
+    height: 20vmax;
+
+    border-radius: 20px;
+    background-image: url(/pictures/activiteiten/1.jpg);
+}
+
+.title {
+    font-size: 4vmax;
+    font-weight: bold;
+    margin-bottom: 2vh;
+}
+
+#nextButton {
+    position: fixed;
+    right: 2vmax;
+    bottom: 2vmax;
+
+    width: 13vw;
+    height: 6vh;
+
+    background-color: rgb(195, 148, 44);
+    border-radius: 10px;
+
+    transition: opacity 0.5s ease;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: space-around;
+}
+
+#nextButton > div > p {
+    margin-left: 1vw;
+}
+
+#nextButton > div {
+    height: 100%;
+    width: fit-content;
+
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+.rightArrow {
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url(./pictures/rightArrow.png);
+
+    width: 2vmax;
+    height: 2vmax;
+
+    margin-right: 1vw;
+}
