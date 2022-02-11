@@ -11,8 +11,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Roboto&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="index.css" />
-    <script defer src="./index.js"></script>
+    <link rel="stylesheet" type="text/css" href="/spanje/index.css" />
+    <script defer src="./spanje/index.js"></script>
 </head>
 
 <body>
@@ -20,32 +20,86 @@
         <div class="logo"></div>
         <p>Barcelona</p>
     </div>
-    <div class="menuBar" id="menuBar">
-        <div style="margin-left: 2vw;">
-            <a href="/">
-                Home
-            </a>
+    <main>
+        <div class="menuBar" id="menuBar">
+            <div style="margin-left: 2vw;">
+                <a href="/">
+                    Home
+                </a>
+            </div>
+            <div>
+                <a href="#" style="text-decoration: underline;">
+                    Spanje
+                </a>
+            </div>
+            <div>
+                <a href="/reis">
+                    Reis
+                </a>
+            </div>
+            <div>
+                <a href="/activiteiten">
+                    Activiteiten
+                </a>
+            </div>
         </div>
-        <div>
-            <a href="#" style="text-decoration: underline;">
-                Spanje
-            </a>
+        <div class="information">
+            <div class="left">
+                <center>
+                    <p class="title">Spanje</p>
+                </center>
+                <p class="info">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum eos et sequi
+                    repudiandae accusamus? Perspiciatis, tenetur. Porro, ex aspernatur ipsam corrupti voluptatem id
+                    nulla voluptatum in aperiam accusamus doloremque nemo sequi laudantium. Doloremque, similique omnis
+                    tempore provident quo asperiores, modi praesentium maiores, libero quas laudantium obcaecati autem?
+                    Mollitia voluptatum consequuntur magnam reprehenderit? Nam tempore aut voluptatibus minus harum,
+                    enim eligendi neque minima odio fuga! Perspiciatis odit culpa, magni minus reiciendis corrupti? Quia
+                    cupiditate consequatur velit fugit quisquam reiciendis incidunt aliquid blanditiis numquam, maxime
+                    obcaecati. Hic, distinctio! Ipsam sint sed ab ducimus quod error explicabo id aut neque saepe velit,
+                    sapiente reiciendis atque dignissimos tenetur nihil quibusdam voluptatem, consectetur assumenda
+                    culpa veniam. Ullam debitis molestias perferendis minima numquam, quo quae officiis distinctio
+                    facilis minus maxime placeat incidunt doloribus vitae modi laboriosam magni quis mollitia aspernatur
+                    consequatur quia blanditiis veritatis illum. Nam, atque! Mollitia autem cumque velit. Perspiciatis
+                    non, vel cum eos accusantium nihil soluta asperiores obcaecati, nobis quo debitis eaque corrupti
+                    animi accusamus quod molestias illo recusandae aliquam alias iste consequuntur voluptatibus sequi
+                    libero. Corporis recusandae voluptatum eos omnis culpa totam voluptate magni quidem, doloremque quae
+                    excepturi ea blanditiis quia tempore pariatur corrupti repudiandae amet, laborum molestias doloribus
+                    cum minus sunt! Voluptatibus a ratione praesentium cumque sunt. Soluta recusandae ut molestias quia
+                    repellat expedita. Eligendi repudiandae reprehenderit nihil perferendis. Illum minima exercitationem
+                    ut necessitatibus earum, error nemo fuga atque et, iure assumenda eveniet molestias rem tempora
+                    incidunt adipisci a! Eum, maxime voluptates! Mollitia cupiditate debitis voluptatibus corporis magni
+                    recusandae vel atque distinctio laborum quibusdam officia maxime, vero perspiciatis expedita odit
+                    aliquam beatae rem! Dolor distinctio esse ipsum, hic culpa voluptate excepturi unde voluptatum
+                    delectus at, perspiciatis sunt iste totam modi, corrupti laboriosam minus. Pariatur ab vero nam
+                    praesentium eius repellat ullam blanditiis rerum totam fugiat dicta tempore amet quas, quibusdam
+                    repudiandae voluptatibus magnam reprehenderit perferendis. Nesciunt, ducimus itaque quas quis
+                    provident harum cupiditate nemo eligendi tempore, aliquam enim non est. Autem voluptatibus nesciunt
+                    reprehenderit laudantium atque qui voluptatum voluptates dolorem exercitationem saepe, aliquid
+                    debitis facere quam corporis. Iusto esse culpa soluta impedit repudiandae sint dolores quibusdam,
+                    aperiam, quia modi, nulla eius.</p>
+            </div>
+            <div class="right">
+                <div>
+                    <iframe width="600" height="500" id="gmap_canvas"
+                        src="https://maps.google.com/maps?q=Spanje&t=&z=5&ie=UTF8&iwloc=&output=embed" frameborder="0"
+                        scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                </div>
+                <div>
+                    <div></div>
+                </div>
+            </div>
         </div>
-        <div>
-            <a href="/reis">
-                Reis
-            </a>
+        <div id="nextButton" style="opacity: 0" onclick="window.open('/reis', '_self')">
+            <div>
+                <p>
+                    Volgende pagina
+                </p>
+            </div>
+            <div>
+                <div class="rightArrow"></div>
+            </div>
         </div>
-        <div>
-            <a href="/activiteiten">
-                Activiteiten
-            </a>
-        </div>
-    </div>
-    <div class="information">
-        <div class="left"></div>
-        <div class="right"></div>
-    </div>
+    </main>
 </body>
 
 </html>

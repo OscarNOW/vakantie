@@ -50,6 +50,9 @@ a {
     display: flex;
     justify-content: flex-start;
 
+    position: sticky;
+    top: 0;
+
 }
 
 .menuBar > div {
@@ -115,6 +118,8 @@ a {
 
     display: flex;
     justify-content: space-around;
+
+    margin-top: 3vh;
 }
 
 .left {
@@ -126,6 +131,48 @@ a {
 .right {
     width: 30vw;
     height: fit-content;
+
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
 }
 
-/* Working */
+.right > div {
+    width: 100%;
+    height: fit-content;
+
+    display: flex;
+    justify-content: space-around;
+}
+
+.right > div > iframe {
+    width: 30vmax;
+    height: 22vmax;
+
+    border-radius: 20px;
+
+    background-image: url(/pictures/kaart.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.right > div > div {    
+    background-image: url(/pictures/vlag.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    width: 30vmax;
+    height: 18vmax;
+
+    border-radius: 20px;
+
+    margin-top: 5vh;
+}
+
+.title {
+    font-size: 4vmax;
+    font-weight: bold;
+    margin-bottom: 2vh;
+}
